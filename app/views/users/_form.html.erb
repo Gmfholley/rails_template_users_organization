@@ -1,0 +1,39 @@
+<div class="errors">
+  <% @user.errors.full_messages.each do |error| %>
+    <p><%= error %></p>
+  <% end %>
+</div>
+
+<div class="form">
+  <%= form_for @user do |f| %>
+    <div class="field">
+       <%= f.label :email %><br />
+       <%= f.text_field :email %>
+    </div>
+    <div class="field">
+       <%= f.label :first_name %><br />
+       <%= f.text_field :first_name %>
+    </div>
+    <div class="field">
+       <%= f.label :last_name %><br />
+       <%= f.text_field :last_name %>
+    </div>
+    <div class="field">
+       <%= f.label :profile_picture %><br />
+       <%= f.file_field :profile_picture %>
+    </div>
+    <div class="field">
+       <%= f.label :password %><br />
+       <%= f.password_field :password %>
+    </div>
+    <div class="field">
+       <%= f.label :password_confirmation %><br />
+       <%= f.password_field :password_confirmation %>
+    </div>  
+    <div>
+      <%= f.button %>
+    </div>
+  <% end %>
+  
+</div>
+
