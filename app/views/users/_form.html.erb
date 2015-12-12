@@ -6,19 +6,19 @@
       <% end %>
     </div>
 
-    <div class="form form-horizontal">
+    <div class="form form-horizontal col col-xs-12">
       <%= form_for @user do |f| %>
         <div class="form-group">
            <%= f.label :email %><br />
-           <%= f.text_field :email, :class => "form-control" %>
+           <%= f.text_field :email, class: "form-control" %>
         </div>
         <div class="form-group">
            <%= f.label :first_name %><br />
-           <%= f.text_field :first_name %>
+           <%= f.text_field :first_name, class: "form-control" %>
         </div>
         <div class="form-group">
            <%= f.label :last_name %><br />
-           <%= f.text_field :last_name %>
+           <%= f.text_field :last_name, class: "form-control" %>
         </div>
         <div class="form-group">
            <%= f.label :profile_picture %><br />
@@ -26,11 +26,11 @@
         </div>
         <div class="form-group">
            <%= f.label :password %><br />
-           <%= f.password_field :password %>
+           <%= f.password_field :password, class: "form-control" %>
         </div>
         <div class="form-group">
            <%= f.label :password_confirmation %><br />
-           <%= f.password_field :password_confirmation %>
+           <%= f.password_field :password_confirmation, class: "form-control" %>
         </div>  
         <div>
           <%= f.button %>
