@@ -8,33 +8,29 @@
 
     <div class="form form-horizontal col col-xs-12">
       <%= form_for @user do |f| %>
-        <div class="form-group">
-           <%= f.label :email %><br />
-           <%= f.text_field :email, class: "form-control" %>
-        </div>
-        <div class="form-group">
-           <%= f.label :first_name %><br />
-           <%= f.text_field :first_name, class: "form-control" %>
-        </div>
-        <div class="form-group">
-           <%= f.label :last_name %><br />
-           <%= f.text_field :last_name, class: "form-control" %>
-        </div>
-        <div class="form-group">
-           <%= f.label :profile_picture %><br />
-           <%= f.file_field :profile_picture %>
-        </div>
-        <div class="form-group">
-           <%= f.label :password %><br />
-           <%= f.password_field :password, class: "form-control" %>
-        </div>
-        <div class="form-group">
-           <%= f.label :password_confirmation %><br />
-           <%= f.password_field :password_confirmation, class: "form-control" %>
-        </div>  
-        <div>
-          <%= f.button %>
-        </div>
+          <div class="form-group">
+             <%= f.label :email %><br />
+             <%= f.text_field :email, class: "form-control" %>
+          </div>
+          <div class="form-group">
+             <%= f.label :first_name %><br />
+             <%= f.text_field :first_name, class: "form-control" %>
+          </div>
+          <div class="form-group">
+             <%= f.label :last_name %><br />
+             <%= f.text_field :last_name, class: "form-control" %>
+          </div>
+          <div class="form-group">
+             <%= f.label :password %><br />
+             <%= f.password_field :password, class: "form-control" %>
+          </div>
+          <div class="form-group">
+             <%= f.label :password_confirmation %><br />
+             <%= f.password_field :password_confirmation, class: "form-control" %>
+          </div>  
+          <div class="form-group">
+            <%= f.button class: "btn btn-default" %>
+          </div>
       <% end %>
   
     </div>
