@@ -1,30 +1,37 @@
-<h1>Choose a new password</h1>
-<%= form_for @user, :url => password_reset_path(@token), :html => {:method => :put} do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<div class="container">
+  <div class="row">
+    <h1>Choose a new password</h1>
+    <%= form_for @user, :url => password_reset_path(@token), :html => {:method => :put} do |f| %>
+      <div class="col col-xs-12">
+        <% if @user.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= @user.email %>
+            <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+              <li class="has-feedback has-error"><%= msg %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+      <div class="form col col-xs-12">
+        <div class="form-group">
+          <%= f.label :email %><br />
+          <%= f.text_field :email, class: "form-control", placeholder: "email@address.com" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, class: "form-control", placeholder: "password" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password_confirmation %><br />
+          <%= f.password_field :password_confirmation, class: "form-control", placeholder: "confirm your password" %>
+        </div>
+        <div class="actions form-group">
+          <%= f.submit, class: "btn btn-default" %>
+        </div>
+      </div>
+    <% end %>
   </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>
