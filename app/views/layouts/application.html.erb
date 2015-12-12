@@ -10,20 +10,21 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div id="nav">
-    <% if current_user %>
-      <%= link_to "Edit Profile", edit_profile_path %>
-      <%= link_to "Logout", :logout, method: :delete %>
-    <% else %>
-      <%= link_to "Register", new_user_path %> |
-      <%= link_to "Login", :login %>
-    <% end %>
+  <div class="container-fluid">
+    <div id="nav">
+      <% if current_user %>
+        <%= link_to "Edit Profile", edit_profile_path %>
+        <%= link_to "Logout", :logout, method: :delete %>
+      <% else %>
+        <%= link_to "Register", new_user_path %> |
+        <%= link_to "Login", :login %>
+      <% end %>
+    </div>
+    <div>
+      <p id="notice"><%= flash[:notice] %></p>
+      <p id="alert"><%= flash[:alert] %></p>
+    </div>
+    <%= yield %>
   </div>
-  <div>
-    <p id="notice"><%= flash[:notice] %></p>
-    <p id="alert"><%= flash[:alert] %></p>
-  </div>
-  <%= yield %>
-
 </body>
 </html>
