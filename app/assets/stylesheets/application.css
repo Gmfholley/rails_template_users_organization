@@ -21,3 +21,8 @@
 .accent-font {
  font-family: 'Pacifico', cursive; 
 }
+
+.accent-background, .accent-background a, .accent-background.btn {
+  background-color: red;
+  color: white;
+}
