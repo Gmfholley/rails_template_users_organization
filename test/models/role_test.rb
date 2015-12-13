@@ -17,6 +17,6 @@ class RoleTest < ActiveSupport::TestCase
   
   test 'roles should not save without names' do
     a = Role.new
-    assert_not a.save
+    assert_not a.save, "Saved without a name"
   end
 end
