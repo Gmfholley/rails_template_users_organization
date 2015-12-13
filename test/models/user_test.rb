@@ -29,10 +29,10 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
   
+  ########################
+  # Test Field Validations
+  ########################
   test 'users should not save without email' do
     a = User.create(first_name: "test", last_name: "test", password: "test5", password_confirmation: "test5", role: roles(:admin))
     assert a.id.nil?, "Saved without email"
@@ -86,6 +86,23 @@ class UserTest < ActiveSupport::TestCase
     assert_not a.id.nil?, "Failed to save with email"
   end
   
+  ###############################
+  # Test callbacks on creation
+  ################################
+  test 'password should be saved as encrypted hash' do
+    a = User.create(email: "email@address.com", first_name: "test", last_name: "test", password: "test5", password_confirmation: "test5", role_id: roles(:admin).id)
+    assert_not a.crypted_password.nil?, "Did not encrypt the password"
+  end
   
+  ################################
+  # Test active record relationships
+  ################################
+  test 'user should belong to organization' do
+    assert_instance_of Organization, users(:susan).organization, "Belongs_to relationship between user and organization does not exist"
+  end
+  
+  test 'user should belong to role' do
+    assert_instance_of Role, users(:susan).role, "Belongs_to relationship between user and role does not exist"
+  end
   
 end
