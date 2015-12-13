@@ -37,7 +37,7 @@ susan:
     first_name: susan
     last_name: surname
     organization: bank
-    role: myAdmin
+    role: admin
 
 
 david:
@@ -45,4 +45,4 @@ david:
   first_name: david
   last_name: surname
   organization: factory
-  role: myOther
+  role: other

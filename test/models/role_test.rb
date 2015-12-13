@@ -14,12 +14,12 @@ class RoleTest < ActiveSupport::TestCase
   #   assert true
   # end
   
-  test "the truth" do
-    assert true
-  end
-  
   test 'roles should not save without names' do
     a = Role.new
     assert_not a.save, "Saved without a name"
+  end
+  
+  test 'roles should have many users' do
+    assert_instance_of User, roles(:admin).users.first
   end
 end
