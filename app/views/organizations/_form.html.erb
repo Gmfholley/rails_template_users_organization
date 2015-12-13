@@ -1,6 +1,5 @@
 <div class="row">
   <%= form_for(@organization) do |f| %>
-    <div class="row">
       <% if @organization.errors.any? %>
         <div id="error_explanation" class="col col-xs-12">
           <h2><%= pluralize(@organization.errors.count, "error") %> prohibited this organization from being saved:</h2>
@@ -57,5 +56,4 @@
         </div>
       </div>
     <% end %>
-  </div>
 </div>
