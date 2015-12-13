@@ -16,8 +16,9 @@ class OrganizationTest < ActiveSupport::TestCase
   #   assert true
   # end
   
-  test 'organizations should have names' do
-    assert true
+  test 'organizations should not save without names' do
+    a = Organization.new
+    assert_not a.save
   end
   
 end
