@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   end
   
   def create
+    params["user"]["role_id"] = user_id
     @user = User.new(user_params)
     if @user.save
       @user = login(@user.email, params[:password])
@@ -45,7 +46,7 @@ class UsersController < ApplicationController
   
   private
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :last_name, :profile_picture)
+    params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :last_name, :profile_picture, :role_id)
   end
   
   def prevent_duplicate_sessions
