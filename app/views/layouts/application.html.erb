@@ -16,20 +16,18 @@
         <div class="navbar-header">
            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#my-navbar" aria-expanded="false">
              <span class="sr-only">Toggle navigation</span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
+             <span class="fa fa-2x fa-bars"></span>
            </button>
            <a class="navbar-brand" href="#"><i class="fa fa-2x fa-life-ring"></i></a>
          </div>
          <div class="collapse navbar-collapse" id="my-navbar">
-           <ul class="nav navbar-nav">
+           <ul class="nav navbar-nav pull-right">
             <% if current_user %>
-              <li><%= link_to "Edit Profile", edit_profile_path %></li>
-              <li><%= link_to "Logout", :logout, method: :delete %></li>
+              <li class="btn"><i class="fa fa-cogs"></i><%= link_to "Edit Profile", edit_profile_path, class: "btn" %></li>
+              <li class="btn"><i class="fa fa-sign-out"><%= link_to "Logout", :logout, method: :delete, class: "btn" %></i></li>
             <% else %>
-              <li><%= link_to "Register", new_user_path %></li>
-              <li><%= link_to "Login", :login %></li>
+              <li class="btn"><i class="fa fa-user-plus"><%= link_to "Register", new_user_path, class: "btn" %></i></li>
+              <li class="btn"><i class="fa fa-sign-in"><%= link_to "Login", :login, class: "btn" %></i></li>
             <% end %>
           </ul>
         </div>
