@@ -13,13 +13,25 @@
 <body>
 
     <div class="navbar">
-      <% if current_user %>
-        <%= link_to "Edit Profile", edit_profile_path %>
-        <%= link_to "Logout", :logout, method: :delete %>
-      <% else %>
-        <%= link_to "Register", new_user_path %> |
-        <%= link_to "Login", :login %>
-      <% end %>
+      <!-- Brand and toggle get grouped for better mobile display -->
+       <div class="navbar-header">
+         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="my-navbar" aria-expanded="false">
+           <span class="sr-only">Toggle navigation</span>
+           <span class="fa fa-2x fa-menu"></span>
+         </button>
+         <a class="navbar-brand" href="#"><i class="fa fa-2x fa-life-ring"></i></a>
+       </div>
+       <div class="collapse navbar-collapse" id="my-navbar">
+         <ul class="nav navbar-nav">
+          <% if current_user %>
+            <li><%= link_to "Edit Profile", edit_profile_path %></li>
+            <li><%= link_to "Logout", :logout, method: :delete %></li>
+          <% else %>
+            <%= link_to "Register", new_user_path %> |
+            <%= link_to "Login", :login %>
+          <% end %>
+        </ul>
+      </div>
     </div>
     <div class="container-fluid">
       <div>
