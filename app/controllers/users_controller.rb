@@ -51,10 +51,4 @@ class UsersController < ApplicationController
     params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :last_name, :profile_picture)
   end
   
-  def prevent_duplicate_sessions
-    if @user
-      redirect_to profile_path, :notice => "You are already logged in.  To create a new account, log out first."
-    end
-  end
-  
 end
