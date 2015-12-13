@@ -35,7 +35,7 @@ class OrganizationsControllerTest < ActionController::TestCase
 
   test "should update organization" do
     patch :update, id: @organization, organization: { name: "changedName" }
-    assert_redirected_to organization_path(assigns(:organization))
+    assert_redirected_to organization_path(@organization)
   end
 
   test "should destroy organization" do
@@ -43,6 +43,6 @@ class OrganizationsControllerTest < ActionController::TestCase
       delete :destroy, id: @organization
     end
 
-    assert_redirected_to organizations_path
+    assert_redirected_to login_path
   end
 end

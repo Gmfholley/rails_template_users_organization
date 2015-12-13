@@ -9,14 +9,10 @@ class OrganizationsController < ApplicationController
   def create
     @organization = Organization.new(organization_params)
     if @organization.save
-      redirect_to profile_path, :notice => "Welcome to Wellness Tracker!"
+      redirect_to organization_path @organization.id, :notice => "Thanks for signing up!"
     else
       render :new, :notice => "Unable to create a new organization."
     end
-  end
-  
-  def index
-    @organizations = @organization.friends
   end
   
   def edit
@@ -24,7 +20,7 @@ class OrganizationsController < ApplicationController
   
   def update
     if @organization.update(organization_params)
-      redirect_to profile_path, :notice => "Account updated!"
+      redirect_to organization_path @organization.id, :notice => "Account updated!"
     else
       render :edit, :notice => "Unable to update your account."
     end
@@ -37,7 +33,7 @@ class OrganizationsController < ApplicationController
     if @organization.destroy
       redirect_to login_path, :notice => "Your account was deleted."
     else
-      redirect_to profile_path, :notice => "Sorry.  Something went wrong.  We are unable to deleter your account."
+      redirect_to organization_path @organization.id, :notice => "Sorry.  Something went wrong.  We are unable to deleter your account."
     end
   end
 
