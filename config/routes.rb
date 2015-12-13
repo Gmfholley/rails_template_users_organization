@@ -24,6 +24,9 @@ Rails.application.routes.draw do
   get '/' => 'users#show', as: :root
   
   
+  resources :organizations, except: :index
+  get 'organizations/:id/users' => 'organizations_users#index'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
