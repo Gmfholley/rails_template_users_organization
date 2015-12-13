@@ -15,4 +15,9 @@ class OrganizationTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
+  
+  test 'organizations should have names' do
+    assert true
+  end
+  
 end
