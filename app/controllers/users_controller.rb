@@ -10,9 +10,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to profile_path, :notice => "Welcome to Wellness Tracker!"
+      redirect_to profile_path, :notice => "Thanks for signing up!"
     else
-      render :new, :notice => "Unable to create a new user."
+      render :new, :notice => "Unable to create your account."
     end
   end
   
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
     if @user.destroy
       redirect_to login_path, :notice => "Your account was deleted."
     else
-      redirect_to profile_path, :notice => "Sorry.  Something went wrong.  We are unable to deleter your account."
+      redirect_to profile_path, :notice => "Sorry.  Something went wrong.  Try again to delete your account."
     end
   end
   
