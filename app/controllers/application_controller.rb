@@ -9,4 +9,8 @@ class ApplicationController < ActionController::Base
   def not_authenticated
     redirect_to login_path, alert: "Please login first"
   end
+  
+  def not_admin
+    redirect_to profile_path, alert: "You do not have access to view that page."
+  end
 end
