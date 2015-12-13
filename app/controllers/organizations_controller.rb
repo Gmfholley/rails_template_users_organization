@@ -1,7 +1,7 @@
 class OrganizationsController < ApplicationController
   skip_before_filter :require_login, only: [:edit, :update, :show, :destroy]
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
-  before_action :is_admin?, only: [:edit, :update, :show, :destroy]
+  # before_action :is_admin?, only: [:edit, :update, :show, :destroy]
   
   def new
     @organization = Organization.new
@@ -10,7 +10,7 @@ class OrganizationsController < ApplicationController
   def create
     @organization = Organization.new(organization_params)
     if @organization.save
-      redirect_to organization_path @organization.id, :notice => "Thanks for signing up!"
+      redirect_to organization_path(@organization.id), :notice => "Thanks for signing up!"
     else
       render :new, :notice => "Unable to create a new organization."
     end
@@ -21,7 +21,7 @@ class OrganizationsController < ApplicationController
   
   def update
     if @organization.update(organization_params)
-      redirect_to organization_path @organization.id, :notice => "Account updated!"
+      redirect_to organization_path(@organization.id), :notice => "Account updated!"
     else
       render :edit, :notice => "Unable to update your account."
     end
@@ -34,7 +34,7 @@ class OrganizationsController < ApplicationController
     if @organization.destroy
       redirect_to login_path, :notice => "Your account was deleted."
     else
-      redirect_to organization_path @organization.id, :notice => "Sorry.  Something went wrong.  We are unable to deleter your account."
+      redirect_to organization_path(@organization.id), :notice => "Sorry.  Something went wrong.  We are unable to deleter your account."
     end
   end
 
