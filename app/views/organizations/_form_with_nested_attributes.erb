@@ -17,9 +17,10 @@
           <%= f.text_field :name, placeholder: "organization name", class: "form-control" %>
         </div>
         <div class="user">
+          <% @user = @organization.users.build %>
           <%= f.fields_for :users do |ff| %>
             <div class="user">
-              <div class="row">
+              <div class="">
                 <form>
                   <div class="form form-horizontal col col-xs-12">
                     <%= form_for @user do |f| %>
