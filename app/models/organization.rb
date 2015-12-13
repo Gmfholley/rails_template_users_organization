@@ -10,7 +10,7 @@
 #
 
 class Organization < ActiveRecord::Base
-  validates :name
+  validates :name, presence: true
   
   has_many :users
   accepts_nested_attributes_for :users, reject_if: :all_blank

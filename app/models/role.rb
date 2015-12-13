@@ -9,6 +9,6 @@
 #
 
 class Role < ActiveRecord::Base
-  validates :name
+  validates :name, presence: true
   has_many :users
 end
