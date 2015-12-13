@@ -4,13 +4,7 @@ class OrganizationsControllerTest < ActionController::TestCase
   setup do
     @organization = organizations(:bank)
   end
-
-  test "should get index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:organizations)
-  end
-
+  
   test "should get new" do
     get :new
     assert_response :success
@@ -18,7 +12,7 @@ class OrganizationsControllerTest < ActionController::TestCase
 
   test "should create organization" do
     assert_difference('Organization.count') do
-      post :create, organization: {  }
+      post :create, organization: { name: "test"  }
     end
 
     assert_redirected_to organization_path(assigns(:organization))
@@ -35,7 +29,7 @@ class OrganizationsControllerTest < ActionController::TestCase
   end
 
   test "should update organization" do
-    patch :update, id: @organization, organization: {  }
+    patch :update, id: @organization, organization: { name: "changedName" }
     assert_redirected_to organization_path(assigns(:organization))
   end
 
