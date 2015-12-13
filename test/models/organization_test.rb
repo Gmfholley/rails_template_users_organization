@@ -35,5 +35,8 @@ class OrganizationTest < ActiveSupport::TestCase
     assert_not a.token.nil?, "Created a record but did not generate a token"
   end
   
+  test 'organization accepts nested attributes for user' do
+    Organization.new(name: "test", users_attributes: {})
+  end
   
 end
