@@ -13,4 +13,10 @@ class ApplicationController < ActionController::Base
   def not_admin
     redirect_to profile_path, alert: "You do not have access to view that page."
   end
+  
+  def is_admin?
+    if @user.role.name != 'admin'
+      not_admin
+    end
+  end
 end
