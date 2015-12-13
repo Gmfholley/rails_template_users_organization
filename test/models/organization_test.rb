@@ -30,5 +30,10 @@ class OrganizationTest < ActiveSupport::TestCase
     assert_instance_of User, organizations(:bank).users.first
   end
   
+  test 'organizations should generate a token after creation' do
+    a = Organization.create(name: "test")
+    assert_not a.token.nil?, "Created a record but did not generate a token"
+  end
+  
   
 end
