@@ -8,7 +8,7 @@ class OrganizationsController < ApplicationController
   end
   
   def create
-    params["organization"]["users_attributes"]["0"]["role_id"] = Role.find_by(name: 'admin').id
+    params["organization"]["users_attributes"]["0"]["role_id"] = admin_id
     @organization = Organization.new(organization_params)
     if @organization.save
       @user = login(params["organization"]["users_attributes"]["0"]["email"], params["organization"]["users_attributes"]["0"]["password"])
