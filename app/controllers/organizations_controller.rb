@@ -11,7 +11,6 @@ class OrganizationsController < ApplicationController
     params["organization"]["users_attributes"]["0"]["role_id"] = Role.find_by(name: 'admin').id
     @organization = Organization.new(organization_params)
     if @organization.save
-      binding.pry
       @user = login(params["organization"]["users_attributes"]["0"]["email"], params["organization"]["users_attributes"]["0"]["password"])
       redirect_to organization_path(@organization.id), :notice => "Thanks for signing up!"
     else
