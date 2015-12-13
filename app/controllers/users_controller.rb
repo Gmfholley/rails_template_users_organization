@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      # @user = login(@user.email, params[:password])
       redirect_to profile_path, :notice => "Thanks for signing up!"
     else
       render :new, :notice => "Unable to create your account."
