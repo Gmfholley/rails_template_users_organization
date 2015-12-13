@@ -68,6 +68,18 @@ class UserTest < ActiveSupport::TestCase
     assert a.id.nil?, "Saved without password and password confirmation matching"
   end
   
+  test 'users should not save without a valid email (t@t.tt)' do
+    a = User.create(email: "test@email", first_name: "test", last_name: "test", password_confirmation: "test5", password_confirmation: "test5", role: roles(:admin))
+    if a.id.nil?
+      a.email = "@email.co"
+      a.save
+    end
+    if a.id.nil?
+      a.email = "test.tt"
+      a.save
+    end
+    assert a.id.nil?, "Saved with an invalid email"
+  end
   
   test 'users should save with email (valid), first and last name, password, and password confirmation(5 characters or longer)' do
     a = User.create(email: "email@address.com", first_name: "test", last_name: "test", password: "test5", password_confirmation: "test5", role_id: roles(:admin).id)
