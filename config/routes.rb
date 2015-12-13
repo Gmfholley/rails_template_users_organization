@@ -13,15 +13,14 @@ Rails.application.routes.draw do
   put 'edit_profile' => 'users#update' 
   patch 'edit_profile' => 'users#update'
   delete 'delete_profile' => 'users#destroy', as: :delete_profile
-  get 'friends_feed' => 'users#index', as: :friends_feed 
-
   get 'users/new' => 'users#new', as: :new_user
   post 'users' => 'users#create'
   get 'users/:user_name' => 'users#show', as: :user
+  get '/' => 'users#show', as: :root
+  
   post 'login' => 'user_sessions#create', as: :login
   get 'login' => 'user_sessions#new'
   delete 'logout' => 'user_sessions#destroy', as: :logout
-  get '/' => 'users#show', as: :root
   
   
   resources :organizations, except: :index
