@@ -19,4 +19,12 @@ class ApplicationController < ActionController::Base
       not_admin
     end
   end
+  
+  def admin_id
+    Role.find_by(name: 'admin').id
+  end
+  
+  def user_id
+    Role.find_by(name: 'user').id
+  end
 end
