@@ -1,10 +1,48 @@
 class OrganizationsController < ApplicationController
+  skip_before_filter :require_login, only: [:edit, :update, :show, :destroy]
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
 
-  # GET /organizations
-  # GET /organizations.json
+  def new
+    @organization = Organization.new
+  end
+  
+  def create
+    @organization = Organization.new(organization_params)
+    if @organization.save
+      redirect_to profile_path, :notice => "Welcome to Wellness Tracker!"
+    else
+      render :new, :notice => "Unable to create a new organization."
+    end
+  end
+  
   def index
-    @organizations = Organization.all
+    @organizations = @organization.friends
+  end
+  
+  def edit
+    @organization = current_organization
+    @current_organization = current_organization
+  end
+  
+  def update
+    @organization = current_organization
+    if @organization.update(organization_params)
+      redirect_to profile_path, :notice => "Account updated!"
+    else
+      render :edit, :notice => "Unable to update your account."
+    end
+  end
+  
+  def show
+  end
+  
+  def destroy
+    @organization = current_organization
+    if @organization.destroy
+      redirect_to login_path, :notice => "Your account was deleted."
+    else
+      redirect_to profile_path, :notice => "Sorry.  Something went wrong.  We are unable to deleter your account."
+    end
   end
 
   private
