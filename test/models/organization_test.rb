@@ -21,6 +21,11 @@ class OrganizationTest < ActiveSupport::TestCase
     assert_not a.save
   end
   
+  test 'organizations should save with names' do
+    a = Organization.new(name: "test")
+    assert a.save,  "Did not save with a name"
+  end
+  
   test 'organizations should have many users' do
     assert_instance_of User, organizations(:bank).users.first
   end
