@@ -1,7 +1,8 @@
 class OrganizationsController < ApplicationController
   skip_before_filter :require_login, only: [:edit, :update, :show, :destroy]
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
-  # before_action :is_admin?, only: [:edit, :update, :show, :destroy]
+  before_action :current_user, only: [:show, :edit, :udpate, :destroy]
+  before_action :is_admin?, only: [:edit, :update, :show, :destroy]
   
   def new
     @organization = Organization.new
