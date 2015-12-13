@@ -27,7 +27,17 @@
           <div class="form-group">
              <%= f.label :password_confirmation %><br />
              <%= f.password_field :password_confirmation, class: "form-control", placeholder: "confirm your password" %>
-          </div>  
+          </div>
+          <div class="form-group">
+            <%= f.label :organization %>
+            <%= f.select :organization_id Organization.all.collect {|o| [o.name, o.id] }, include_blank: true %>
+          </div>
+          <% if @current_user.role.name = "admin" %>
+            <div class="form-group">
+              <%= f.label :role %>
+              <%= f.select :role_id Role.all.collect { |r| [r.name, r.id] }, include_blank: false %>
+            </div>
+          <% end %>
           <div class="form-group">
             <%= f.button class: "btn accent-background" %>
           </div>
