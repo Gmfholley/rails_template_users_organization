@@ -14,4 +14,9 @@ class RoleTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
+  
+  test 'roles should not save without names' do
+    a = Role.new
+    assert_not a.save
+  end
 end
