@@ -1,8 +1,13 @@
 require 'test_helper'
 
 class OrganizationsControllerTest < ActionController::TestCase
+  include Sorcery::TestHelpers::Rails::Integration
+  include Sorcery::TestHelpers::Rails::Controller
+  
   setup do
     @organization = organizations(:bank)
+    @user = users(:susan)
+    login_user(user = @user, route = login_url) 
   end
   
   test "should get new" do
