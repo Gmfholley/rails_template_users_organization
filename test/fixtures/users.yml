@@ -37,12 +37,12 @@ susan:
     first_name: susan
     last_name: surname
     organization: bank
-    role: admin
-    
-  
+    # role: myAdmin
+
+
 david:
   email: davidEmail
   first_name: david
   last_name: surname
   organization: factory
-  role: user
+  # role: myOther
