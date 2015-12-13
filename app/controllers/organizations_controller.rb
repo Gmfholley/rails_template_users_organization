@@ -8,8 +8,11 @@ class OrganizationsController < ApplicationController
   end
   
   def create
+    params["organization"]["users_attributes"]["0"]["role_id"] = Role.find_by(name: 'admin').id
     @organization = Organization.new(organization_params)
     if @organization.save
+      binding.pry
+      @user = login(params["organization"]["users_attributes"]["0"]["email"], params["organization"]["users_attributes"]["0"]["password"])
       redirect_to organization_path(@organization.id), :notice => "Thanks for signing up!"
     else
       render :new, :notice => "Unable to create a new organization."
@@ -46,6 +49,6 @@ class OrganizationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_params
-      params.require(:organization).permit(:name, :users_attributes)
+      params.require(:organization).permit(:name, :users_attributes => [:email, :first_name, :last_name, :password,  :password_confirmation, :role_id])
     end
 end
