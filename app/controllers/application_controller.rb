@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   end
   
   def is_admin?
-    if @user.role.name != 'admin'
+    if current_user.role.name != 'admin'
       not_admin
     end
   end
