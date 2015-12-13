@@ -20,12 +20,9 @@ class OrganizationsController < ApplicationController
   end
   
   def edit
-    @organization = current_organization
-    @current_organization = current_organization
   end
   
   def update
-    @organization = current_organization
     if @organization.update(organization_params)
       redirect_to profile_path, :notice => "Account updated!"
     else
@@ -37,7 +34,6 @@ class OrganizationsController < ApplicationController
   end
   
   def destroy
-    @organization = current_organization
     if @organization.destroy
       redirect_to login_path, :notice => "Your account was deleted."
     else
