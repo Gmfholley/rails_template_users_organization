@@ -7,9 +7,9 @@ class UsersController < ApplicationController
   end
   
   def create
-    #TODO - refactor this later
-    params["user"]["role_id"] = user_id
     @user = User.new(user_params)
+    # for users who sign up through the portal, they should be set to users
+    @user.role_id = user_id
     if @user.save
       @user = login(@user.email, params["user"]["password"])
       redirect_to profile_path, :notice => "Thanks for signing up!"
