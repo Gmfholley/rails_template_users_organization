@@ -26,10 +26,17 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to profile_path
   end
   
-  test "should show organization" do
+  test "should show user profile page" do
     @current_user = users(:susan)
     login_user(user = @current_user, route = login_path)
     get :show, id: @current_user.id
+    assert_response :success
+  end
+  
+  test "should get edit" do
+    @current_user = users(:susan)
+    login_user(user = @current_user, route = login_path)
+    get :edit, id: @current_user.id
     assert_response :success
   end
   
