@@ -7,12 +7,12 @@ class UserSessionsControllerTest < ActionController::TestCase
   end
 
   test "should get create" do
-    get :create
+    post :create
     assert_response :success
   end
 
   test "should get destroy" do
-    get :destroy
+    delete :destroy
     assert_response :success
   end
 
