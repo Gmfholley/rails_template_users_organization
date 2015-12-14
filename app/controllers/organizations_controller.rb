@@ -49,7 +49,7 @@ class OrganizationsController < ApplicationController
     end
     
     def belongs_to_organization?
-      if !@organization.users.include?(@user)
+      if !@organization.users.include?(current_user)
         redirect_to profile_path, notice: "You are not authorized to see another organization's page."
       end
     end
