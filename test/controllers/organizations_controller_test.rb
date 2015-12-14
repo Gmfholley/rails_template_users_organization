@@ -6,8 +6,8 @@ class OrganizationsControllerTest < ActionController::TestCase
   
   setup do
     @organization = organizations(:bank)
-    @user = users(:susan)
-    login_user(user = @user, route = login_url) 
+    @current_user = @organization.users.first
+    login_user(user = @current_user, route = login_path) 
   end
   
   test "should get new" do
