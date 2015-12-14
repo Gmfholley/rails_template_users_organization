@@ -2,6 +2,7 @@ class OrganizationsController < ApplicationController
   skip_before_filter :require_login, only: [:edit, :update, :show, :destroy]
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
   before_action :is_admin?, only: [:edit, :update, :show, :destroy]
+  before_action :belongs_to_organization?, only: [:edit, :update, :show, :destroy]
   
   def new
     @organization = Organization.new
@@ -30,9 +31,6 @@ class OrganizationsController < ApplicationController
   end
   
   def show
-    if !@organization.users.include?(@user)
-      redirect_to profile_path, notice: "You are not authorized to see another organization's page."
-    end
   end
   
   def destroy
@@ -48,7 +46,13 @@ class OrganizationsController < ApplicationController
     def set_organization
       @organization = Organization.find(params[:id])
     end
-
+    
+    def belongs_to_organization?
+      if !@organization.users.include?(@user)
+        redirect_to profile_path, notice: "You are not authorized to see another organization's page."
+      end
+    end
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_params
       params.require(:organization).permit(:name, :users_attributes => [:email, :first_name, :last_name, :password,  :password_confirmation, :role_id])
