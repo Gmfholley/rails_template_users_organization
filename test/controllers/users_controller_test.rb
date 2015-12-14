@@ -18,12 +18,12 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  test "should create organization" do
-    assert_difference('Organization.count') do
-      post :create, organization: { name: "test"  }
+  test "should create user" do
+    assert_difference('User.count') do
+      post :create, user: { email: "test@t.com", first_name: "test", last_name: "test", password: "password", password_confirmation: "password" }
     end
 
-    assert_redirected_to organization_path(assigns(:organization))
+    assert_redirected_to profile_path
   end
   
   
