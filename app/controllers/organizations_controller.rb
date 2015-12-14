@@ -1,5 +1,6 @@
 class OrganizationsController < ApplicationController
   skip_before_filter :require_login, only: [:new, :create]
+  before_action :prevent_duplicate_sessions, only: [:new, :create]
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
   before_action :is_admin?, only: [:edit, :update, :destroy]
   before_action :belongs_to_organization?, only: [:edit, :update, :show, :destroy]
@@ -56,5 +57,11 @@ class OrganizationsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_params
       params.require(:organization).permit(:name, :users_attributes => [:email, :first_name, :last_name, :password,  :password_confirmation, :role_id])
+    end
+    
+    def prevent_duplicate_sessions
+      if @user
+        redirect_to profile_path, :notice => "You are already logged in.  To create a new account, log out first."
+      end
     end
 end
