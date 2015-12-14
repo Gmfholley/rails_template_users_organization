@@ -27,7 +27,7 @@ class OrganizationsControllerTest < ActionController::TestCase
     get :show, id: @organization
     assert_response :success
   end
-
+  
   test "should get edit" do
     get :edit, id: @organization
     assert_response :success
