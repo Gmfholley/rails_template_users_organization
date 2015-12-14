@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
   
   def create
-    #refactor this later
+    #TODO - refactor this later
     params["user"]["role_id"] = user_id
     @user = User.new(user_params)
     if @user.save
