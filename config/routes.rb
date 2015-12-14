@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get 'edit_profile' => 'users#edit', as: :edit_profile
   put 'edit_profile' => 'users#update' 
   patch 'edit_profile' => 'users#update'
+  put 'users/:id' => 'users#update'
+  patch 'users/:id' => 'users#update'
   delete 'delete_profile' => 'users#destroy', as: :delete_profile
   get 'users/new' => 'users#new', as: :new_user
   post 'users' => 'users#create'

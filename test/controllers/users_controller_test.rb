@@ -43,7 +43,9 @@ class UsersControllerTest < ActionController::TestCase
   test "should update user" do
     @current_user = users(:susan)
     login_user(user = @current_user, route = login_path)
-    patch :update, id: @current_user.id, user: { first_name: "changedName" }
+
+    patch :update, id: @current_user.id, user: {first_name: "changedName", last_name: @current_user.last_name, email: @current_user.email, role_id: @current_user.role_id, password: "secret", password_confirmation: "secret" }
+
     assert_equal @current_user.first_name, "changedName"
     assert_redirected_to profile_path
   end

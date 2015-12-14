@@ -33,7 +33,7 @@
 # below each fixture, per the syntax in the comments below
 #
 susan:
-    email: susanEmail
+    email: susanEmail@email.com
     first_name: susan
     last_name: surname
     organization: bank
@@ -42,7 +42,7 @@ susan:
     crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("secret", salt) %>
 
 david:
-  email: davidEmail
+  email: davidEmail@email.com
   first_name: david
   last_name: surname
   organization: factory
