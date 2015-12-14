@@ -30,6 +30,9 @@ class OrganizationsController < ApplicationController
   end
   
   def show
+    if !@organization.users.include?(@user)
+      redirect_to profile_path, notice: "You are not authorized to see another organization's page."
+    end
   end
   
   def destroy
