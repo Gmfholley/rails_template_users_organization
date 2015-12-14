@@ -26,10 +26,6 @@ class OrganizationsControllerTest < ActionController::TestCase
   test "should show organization" do
     get :show, id: @organization
     assert_response :success
-    # @user = users(:david)
-    # login_user(user = @user, route = login_url)
-    # get :show, id: @organization
-    # assert_redirected_to profile_path
   end
 
   test "should get edit" do
