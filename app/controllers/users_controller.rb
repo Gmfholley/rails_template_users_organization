@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   skip_before_filter :require_login, only: [:new, :create]  
-  before_action :current_user
   before_action :prevent_duplicate_sessions, only: [:new, :create]
    
   def new
@@ -8,6 +7,7 @@ class UsersController < ApplicationController
   end
   
   def create
+    #refactor this later
     params["user"]["role_id"] = user_id
     @user = User.new(user_params)
     if @user.save
@@ -20,7 +20,6 @@ class UsersController < ApplicationController
   
   def edit
     @user = current_user
-    @current_user = current_user
   end
   
   def update
@@ -46,7 +45,7 @@ class UsersController < ApplicationController
   
   private
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :last_name, :profile_picture, :role_id)
+    params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :last_name, :profile_picture, :role_id, :organization_id)
   end
   
   def prevent_duplicate_sessions
