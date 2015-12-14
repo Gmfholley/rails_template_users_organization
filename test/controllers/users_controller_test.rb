@@ -40,5 +40,23 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
   
+  test "should update user" do
+    @current_user = users(:susan)
+    login_user(user = @current_user, route = login_path)
+    patch :update, id: @current_user.id, user: { first_name: "changedName" }
+    assert_equal @current_user.first_name, "changedName"
+    assert_redirected_to profile_path
+  end
+
+  test "should destroy user" do
+    @current_user = users(:susan)
+    login_user(user = @current_user, route = login_path)
+    assert_difference('User.count', -1) do
+      delete :destroy, id: @current_user.id
+    end
+
+    assert_redirected_to login_path
+  end
+  
   
 end
