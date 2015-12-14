@@ -17,7 +17,7 @@
           <%= f.text_field :name, placeholder: "organization name", class: "form-control" %>
         </div>
         <div class="user">
-          <% @organization.users.first || @user = @organization.users.build %>
+          <% @user = @organization.users.first || @organization.users.build %>
           <%= f.fields_for :users do |ff| %>
             <div class="user">
               <div class="">
