@@ -37,8 +37,8 @@
     </div>
     <div class="container-fluid">
       <div>
-        <p id="notice"><%= flash[:notice] %></p>
-        <p id="alert"><%= flash[:alert] %></p>
+        <p class="accent-font" id="notice"><%= flash[:notice] %></p>
+        <p class="accent-font has-error has-feedback" id="alert"><%= flash[:alert] %></p>
       </div>
       <%= yield %>
   </div>
