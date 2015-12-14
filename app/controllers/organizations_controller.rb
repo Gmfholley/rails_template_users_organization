@@ -10,8 +10,9 @@ class OrganizationsController < ApplicationController
   end
   
   def create
-    params["organization"]["users_attributes"]["0"]["role_id"] = admin_id
     @organization = Organization.new(organization_params)
+    # for new organizations, make the creator the admin
+    @organization.users.first.role_id = admin_id
     if @organization.save
       @user = login(params["organization"]["users_attributes"]["0"]["email"], params["organization"]["users_attributes"]["0"]["password"])
       redirect_to organization_path(@organization.id), :notice => "Thanks for signing up!"
