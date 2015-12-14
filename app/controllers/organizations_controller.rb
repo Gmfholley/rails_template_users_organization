@@ -37,7 +37,7 @@ class OrganizationsController < ApplicationController
     if @organization.destroy
       redirect_to login_path, :notice => "Your account was deleted."
     else
-      redirect_to organization_path(@organization.id), :notice => "Sorry.  Something went wrong.  We are unable to deleter your account."
+      redirect_to organization_path(@organization.id), :notice => "Sorry.  Something went wrong.  We are unable to delete the account."
     end
   end
 
