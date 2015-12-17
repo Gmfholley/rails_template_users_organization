@@ -6,7 +6,7 @@ class OrganizationsControllerTest < ActionController::TestCase
   
   setup do
     @organization = organizations(:bank)
-    @current_user = @organization.users.first
+    @current_user = users(:susan)
     login_user(user = @current_user, route = login_path) 
   end
   
@@ -45,5 +45,5 @@ class OrganizationsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to login_path
-  end
+  end  
 end
