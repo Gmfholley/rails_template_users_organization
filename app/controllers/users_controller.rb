@@ -1,14 +1,20 @@
 class UsersController < ApplicationController
   skip_before_filter :require_login, only: [:new, :create]  
   before_action :prevent_duplicate_sessions, only: [:new, :create]
+  before_action :set_organization, only: [:new, :create]
    
   def new
-    @user = User.new
+    @user = @organization.users.build
+    binding.pry
   end
   
   def create
+    binding.pry
     @user = User.new(user_params)
-    # for users who sign up through the portal, they should be set to users
+    if !@organization.blank?
+      @user.organization = @organization
+    end
+        # for users who sign up through the portal, they should be set to users
     @user.role_id = user_id
     if @user.save
       @user = login(@user.email, params["user"]["password"])
@@ -55,4 +61,7 @@ class UsersController < ApplicationController
     end
   end
   
+  def set_organization
+    @organization = Organization.find_by(token: params[:id])
+  end  
 end
