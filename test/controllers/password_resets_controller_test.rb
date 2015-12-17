@@ -7,13 +7,16 @@ class PasswordResetsControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    get :edit, id: "string"
+    get :edit, id: "ARealResetToken"
     assert_response :success
+    
+    get :edit, id: "notARealToken"
+    assert_redirected_to login_path
   end
 
   test "should get update" do
     patch :update, id: "string", user: {password: "changedName", password_confirmation: "changedName"}
-    assert_redirected_to root_path
+    assert_redirected_to login_path
   end
 
 end

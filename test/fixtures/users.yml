@@ -40,7 +40,7 @@ susan:
     role: admin
     salt: <%= salt = "asdasdastr4325234324sdfds" %>
     crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("secret", salt) %>
-    reset_password_token: "string"
+    reset_password_token: "ARealResetToken"
 
 david:
   email: davidEmail@email.com
