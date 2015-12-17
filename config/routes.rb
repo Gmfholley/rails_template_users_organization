@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get 'users/new' => 'users#new', as: :new_user
   post 'users' => 'users#create'
   get 'users/:user_name' => 'users#show', as: :user
-  get '/' => 'users#show', as: :root
+  get '/' => 'users#show'
   
   post 'login' => 'user_sessions#create', as: :login
   get 'login' => 'user_sessions#new'
@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   
   
   resources :organizations, except: :index
+  
+  root :to => 'users#show'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
