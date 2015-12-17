@@ -13,7 +13,7 @@ class UserSessionsControllerTest < ActionController::TestCase
 
   test "should get destroy" do
     delete :destroy
-    assert_response :success
+    assert_redirected_to login_path
   end
 
 end
