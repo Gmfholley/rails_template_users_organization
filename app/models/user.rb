@@ -28,6 +28,7 @@
 
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
+  
   validates :password_confirmation, presence: true
   validates :password, confirmation: true, length: {minimum: 5}
   validates :email, presence: true, email: true, uniqueness: true

@@ -1,4 +1,5 @@
 class PasswordResetsController < ApplicationController
+  require 'sorcery'
   skip_before_filter :require_login
 
   # request password reset.
@@ -11,7 +12,7 @@ class PasswordResetsController < ApplicationController
 
     # Tell the user instructions have been sent whether or not email was found.
     # This is to not leak information to attackers about which emails exist in the system.
-    redirect_to(login_path, :notice => 'Instructions have been sent to your email.')
+    redirect_to login_path, :notice => "Instructions have been sent to your email."
   end
 
   # This is the reset password form.
@@ -32,16 +33,17 @@ class PasswordResetsController < ApplicationController
     if @user.blank?
       not_authenticated
       return
-    end
-
-    # the next line makes the password confirmation validation work
-    @user.password_confirmation = params[:user][:password_confirmation]
-    # the next line clears the temporary token and updates the password
-    if @user.change_password!(params[:user][:password])
-      @user = login(@user.email, params[:user][:password])
-      redirect_to(root_path, :notice => 'Password was successfully updated.')
     else
-      render :action => "edit"
+
+      # the next line makes the password confirmation validation work
+      @user.password_confirmation = params[:user][:password_confirmation]
+      # the next line clears the temporary token and updates the password
+      if @user.change_password!(params[:user][:password])
+        @user = login(@user.email, params[:user][:password])
+        redirect_to root_path, :notice => "Password was successfully updated."
+      else
+        render :edit, :notice => "Unable to update your account."
+      end
     end
   end
 end
