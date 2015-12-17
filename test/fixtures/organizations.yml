@@ -13,6 +13,8 @@
 
 bank:
   name: myBank
+  token: "myToken"
 
 factory:
   name: myFactory
+  token: "myFactoryToken"
