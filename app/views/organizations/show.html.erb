@@ -2,21 +2,31 @@
   <h2 class="accent-font text-center"><%= @organization.name %></h2>
   <div class="row">
     <div class="col col-xs-12 col-md-6 text-center">
-      <%= link_to 'Edit', edit_organization_path(@organization), class: 'accent-background btn' %>    
+      <%= link_to 'Edit Organization', edit_organization_path(@organization), class: 'accent-background btn' %>    
     </div>
     <div class="col col-xs-12 col-md-6 text-center">
-      <%= link_to 'Delete', organization_path(@organization), method: 'delete', class: 'accent-background btn' %>
+      <%= link_to 'Delete Organization', organization_path(@organization), method: 'delete', class: 'accent-background btn' %>
     </div>
   </div>
   <div class="margin30"></div>
   <div class="col col-xs-12 col-md-8 col-md-offset-2">
-    <table class="table table-condensed table-responsive">
+    <table class="table table-condensed table-responsive table-hover">
       <thead class="accent-background">
         <th>Name</th>
         <th>Status</th>
-        <th></th>
       </thead>
-      <tbody class="table-hover">
+      <tbody>
+        <% @organization.users.each do |user| %>
+          <tr>
+            <% if user == @user || @is_admin %>
+                <td><%= link_to "#{user.first_name} #{user.last_name}", profile_path %></td>
+                <td></td>
+              <% else %>
+                <td><%= "#{user.first_name} #{user.last_name}" %></td>
+                <td></td>
+            <% end %>
+          </tr>
+        <% end %>
         <tr></tr>
       </tbody>
     </table>
