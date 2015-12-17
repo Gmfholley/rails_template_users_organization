@@ -2,8 +2,8 @@ require 'test_helper'
 
 class PasswordResetsControllerTest < ActionController::TestCase
   test "should get create" do
-    post password_resets_path
-    assert_response :success
+    post :create
+    assert_redirected_to login_path
   end
 
   test "should get edit" do
@@ -12,10 +12,8 @@ class PasswordResetsControllerTest < ActionController::TestCase
   end
 
   test "should get update" do
-    
-    patch :update, id: "string", password_resets: { id: "changedName" }
-    put :update, password_resets: { id: "test"  }
-    assert_response :success
+    patch :update, id: "string", user: {password: "changedName", password_confirmation: "changedName"}
+    assert_redirected_to root_path
   end
 
 end
