@@ -20,7 +20,7 @@ class OrganizationsControllerTest < ActionController::TestCase
       post :create, organization: { name: "test", :users_attributes => {"0" => {email: "test@test.com", first_name: "test", last_name: "test", password: "password", password_confirmation: "password"}}  }
     end
 
-    assert_redirected_to organization_path(assigns(:organization))
+    assert_redirected_to organization_path(assigns(:organization).token)
   end
 
   test "should show organization" do
@@ -36,7 +36,7 @@ class OrganizationsControllerTest < ActionController::TestCase
   test "should update organization" do
     patch :update, id: @organization, organization: { name: "changedName" }
     assert_equal assigns(:organization).name, "changedName"
-    assert_redirected_to organization_path(@organization)
+    assert_redirected_to organization_path(@organization.token)
   end
 
   test "should destroy organization" do

@@ -16,7 +16,7 @@ class OrganizationsController < ApplicationController
     @user.role_id = admin_id
     if @organization.save
       @user = login(@user.email,password_params)
-      redirect_to organization_path(@organization.id), :notice => "Thanks for signing up!"
+      redirect_to organization_path(@organization.token)(@organization.id), :notice => "Thanks for signing up!"
     else
       render :new, :notice => "Unable to create a new organization."
     end
@@ -27,7 +27,7 @@ class OrganizationsController < ApplicationController
   
   def update
     if @organization.update(organization_params)
-      redirect_to organization_path(@organization.id), :notice => "Account updated!"
+      redirect_to organization_path(@organization.token)(@organization.id), :notice => "Account updated!"
     else
       render :edit, :notice => "Unable to update your account."
     end
@@ -42,7 +42,7 @@ class OrganizationsController < ApplicationController
     if @organization.destroy
       redirect_to login_path, :notice => "Your account was deleted."
     else
-      redirect_to organization_path(@organization.id), :notice => "Sorry.  Something went wrong.  We are unable to delete the account."
+      redirect_to organization_path(@organization.token)(@organization.id), :notice => "Sorry.  Something went wrong.  We are unable to delete the account."
     end
   end
 
