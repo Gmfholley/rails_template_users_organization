@@ -35,6 +35,7 @@ class OrganizationsControllerTest < ActionController::TestCase
 
   test "should update organization" do
     patch :update, id: @organization, organization: { name: "changedName" }
+    assert_equal assigns(:organization).name, "changedName"
     assert_redirected_to organization_path(@organization)
   end
 
