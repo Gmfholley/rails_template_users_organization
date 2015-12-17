@@ -1,1 +1,20 @@
-<%= link_to 'Edit', edit_organization_path(@organization) %> |
+<div class="row">
+<h2 class="accent-font text-center"><%= @organization.name %></h2>
+<div class="row">
+  <div class="col col-xs-12 col-md-6">
+    <%= link_to 'Edit', edit_organization_path(@organization), class: 'btn' %>    
+  </div>
+  <div class="col col-xs-12 col-md-6">
+    <%= link_to 'Delete', organization_path(@organization), method: 'delete', class: 'btn' %>
+  </div>
+</div>
+<p></p>
+
+<table class="table table-condensed table-responsive">
+  <th>
+    <tr class="accent-background">Name</tr>
+    
+  </th>
+</table>
+
+<%= link_to 'Edit', edit_organization_path(@organization), class: "btn" %>
