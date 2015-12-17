@@ -17,6 +17,7 @@ class PasswordResetsControllerTest < ActionController::TestCase
   test "should get update" do
     patch :update, id: "string", user: {password: "changedName", password_confirmation: "changedName"}
     assert_redirected_to root_path
+    assert_equal  "There was a problem logging in.", flash[:notice]
   end
 
 end
