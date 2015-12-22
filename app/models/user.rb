@@ -38,9 +38,9 @@ class User < ActiveRecord::Base
   has_many :organizations, through: :organization_users
   
   def role(organization)
-    if self.organizations.include?(organization)
-      OrganizationUser.find_by(user_id: self.id, organization_id: organization.id).role
-    end
+    # if self.organizations.include?(organization)
+    #   OrganizationUser.find_by(user_id: self.id, organization_id: organization.id).role
+    # end
   end
   
 end
