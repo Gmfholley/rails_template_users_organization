@@ -2,44 +2,33 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
-  
-  get 'profile' => 'profile#show', as: :profile
-  get 'profile/new' => 'profile#new', as: :new_profile
+  # there is no index of profiles
+  # profiles is *your* site
+  # users/:id is somebody else's
   post 'profile' => 'profile#create'
   get 'profile/edit' => 'profile#edit', as: :edit_profile
   put 'profile' => 'profile#update'
   patch 'profile' => 'profile/#update'
   delete 'profile' => 'profile#destroy'
+
+  # there is no index of users (that appears on the organization page)
   
+  resources :users, except: :index
+  get 'organizations/:id/sign_up' => 'users#new', as: :organization_sign_up
+
+  resources :organizations, except: :index
+
 
   post 'password_resets' => 'password_resets#create', as: :password_resets
   get 'password_resets/:id/edit' => 'password_resets#edit', as: :edit_password_resets
   put 'password_resets/:id' => 'password_resets#update', as: :password_reset
   patch 'password_resets/:id' => 'password_resets#update'
 
-
-
-  get 'profile' => 'users#show', as: :profile
-  get 'edit_profile' => 'users#edit', as: :edit_profile
-  put 'edit_profile' => 'users#update' 
-  patch 'edit_profile' => 'users#update'
-  put 'users/:id' => 'users#update'
-  patch 'users/:id' => 'users#update'
-  delete 'delete_profile' => 'users#destroy', as: :delete_profile
-  get 'users/new' => 'users#new', as: :new_user
-  post 'users' => 'users#create'
-  get 'users/:id' => 'users#show', as: :user
-  get '/' => 'users#show'
-  
   post 'login' => 'user_sessions#create', as: :login
   get 'login' => 'user_sessions#new'
   delete 'logout' => 'user_sessions#destroy', as: :logout
   
-  
-  resources :organizations, except: :index
-  
-  get 'organizations/:id/sign_up' => 'users#new', as: :organization_sign_up
-    
+      
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
