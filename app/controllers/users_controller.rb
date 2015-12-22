@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   skip_before_filter :require_login, only: [:new, :create]  
   before_action :prevent_duplicate_sessions, only: [:new, :create]
   before_action :set_user, except: [:new, :create]
-  before_action :require_permission_to_see, except: [:new, :create, :show]
+  before_action :has_authorization, except: [:new, :create, :show]
   before_action :set_organization, only: [:new, :create]
    
   def new
@@ -65,7 +65,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
   
-  def require_permission_to_see
+  def has_authorization
     current_user == @user
   end
   
