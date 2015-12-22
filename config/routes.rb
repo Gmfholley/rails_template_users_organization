@@ -5,15 +5,11 @@ Rails.application.routes.draw do
   # there is no index of profiles
   # profiles is *your* site
   # users/:id is somebody else's
-  post 'profile' => 'profile#create'
-  get 'profile/edit' => 'profile#edit', as: :edit_profile
-  put 'profile' => 'profile#update'
-  patch 'profile' => 'profile/#update'
-  delete 'profile' => 'profile#destroy'
 
   # there is no index of users (that appears on the organization page)
   
-  resources :users, except: :index
+  resources :profile, except: [:new, :create, :index]
+  resources :users, except: [:index, :edit]
   get 'organizations/:id/sign_up' => 'users#new', as: :organization_sign_up
 
   resources :organizations, except: :index
