@@ -26,10 +26,6 @@ class OrganizationTest < ActiveSupport::TestCase
     assert a.save,  "Did not save with a name"
   end
   
-  test 'organizations should have many users' do
-    assert_instance_of User, organizations(:bank).users.first
-  end
-  
   test 'organizations should generate a token after creation' do
     a = Organization.create(name: "test")
     assert_not a.token.nil?, "Created a record but did not generate a token"
@@ -39,4 +35,15 @@ class OrganizationTest < ActiveSupport::TestCase
     Organization.new(name: "test", users_attributes: {})
   end
   
+  ############## 
+  # Test Active Record Associations
+  #################
+  
+  test 'organizations should have many organization_users' do
+    assert_instance_of OrganizationUser, organizations(:factory).organization_users.first, "Has_many relationship does not exist"
+  end
+  
+  test 'organizations should have many users' do
+    assert_instance_of User, organizations(:factory).users.first, "Has_many relationship does not exist"
+  end
 end
