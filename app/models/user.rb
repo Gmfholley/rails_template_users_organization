@@ -36,10 +36,14 @@ class User < ActiveRecord::Base
   has_many :organization_users
   has_many :organizations, through: :organization_users
   
+  # for an organization, returns the user's role (or empty Role if not found)
+  #
+  # organization - Organization object
+  #
+  # returns a Role object
   def role(organization)
-    # if self.organizations.include?(organization)
-    #   OrganizationUser.find_by(user_id: self.id, organization_id: organization.id).role
-    # end
+    assoc = OrganizationUser.find_by(user_id: self.id, organization_id: organization.id) || OrganizationUser.new
+    assoc.role
   end
   
 end
