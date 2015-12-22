@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get 'profile/edit' => 'profile#edit', as: :edit_profile
   
   resources :profile, except: [:new, :create, :index]
-  resources :users, except: [:edit, :destroy, :index]
+  resources :users, except: [:edit, :update, :destroy, :index]
   get 'organizations/:id/sign_up' => 'users#new', as: :organization_sign_up
 
   resources :organizations, except: :index

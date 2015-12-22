@@ -27,20 +27,12 @@ class UsersController < ApplicationController
      end 
     else
       # for users who sign up through the portal, they should be set to users
-      if @user.id.  blank?
+      if @user.id.blank?
         render :new, :notice => "Unable to create your account."  
       else
         @user = login(@user.email, params["user"]["password"])
         redirect_to profile_path, :notice => "Thanks for signing up!"
       end
-    end
-  end
-  
-  def update
-    if @user.update(user_params)
-      redirect_to :back, :notice => "Account updated!"
-    else
-      redirect_to :back, :notice => "Unable to update the account. #{@user.errors}"
     end
   end
   
