@@ -8,6 +8,12 @@ Rails.application.routes.draw do
 
   # there is no index of users (that appears on the organization page)
   
+  get 'profile' => 'profile#show', as: :profile
+  put 'profile' => 'profile#update'
+  patch 'profile' => 'profile#update'
+  delete 'profile' => 'profile#destroy'
+  get 'profile/edit' => 'profile#edit', as: :edit_profile
+  
   resources :profile, except: [:new, :create, :index]
   resources :users, except: [:edit, :destroy, :index]
   get 'organizations/:id/sign_up' => 'users#new', as: :organization_sign_up
