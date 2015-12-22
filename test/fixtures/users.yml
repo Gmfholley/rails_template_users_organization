@@ -34,8 +34,6 @@ susan:
     email: susanEmail@email.com
     first_name: susan
     last_name: surname
-    organizations: bank
-    role: admin
     salt: <%= salt = "asdasdastr4325234324sdfds" %>
     crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("secret", salt) %>
     reset_password_token: "ARealResetToken"
@@ -44,7 +42,5 @@ david:
   email: davidEmail@email.com
   first_name: david
   last_name: surname
-  organization: factory
-  role: other
   salt: <%= salt = "asdasdastr4325234324sdfds" %>
   crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("secret", salt) %>

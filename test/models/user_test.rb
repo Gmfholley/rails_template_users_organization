@@ -32,42 +32,42 @@ class UserTest < ActiveSupport::TestCase
   # Test Field Validations
   ########################
   test 'users should not save without email' do
-    a = User.create(first_name: "test", last_name: "test", password: "test5", password_confirmation: "test5", role: roles(:admin))
+    a = User.create(first_name: "test", last_name: "test", password: "test5", password_confirmation: "test5")
     assert a.id.nil?, "Saved without email"
   end
   
   test 'users should not save without first name' do
-    a = User.create(email: "test@email.com", last_name: "test", password: "test5", password_confirmation: "test5", role: roles(:admin))
+    a = User.create(email: "test@email.com", last_name: "test", password: "test5", password_confirmation: "test5")
     assert a.id.nil?, "Saved without first name"
   end
   
   test 'users should not save without last name' do
-    a = User.create(email: "test@email.com", first_name: "test", password: "test5", password_confirmation: "test5", role: roles(:admin))
+    a = User.create(email: "test@email.com", first_name: "test", password: "test5", password_confirmation: "test5")
     assert a.id.nil?, "Saved without last name"
   end
   
   test 'users should not save without password' do
-    a = User.create(email: "test@email.com", first_name: "test", last_name: "test", password_confirmation: "test5", role: roles(:admin))
+    a = User.create(email: "test@email.com", first_name: "test", last_name: "test", password_confirmation: "test5")
     assert a.id.nil?, "Saved without password"
   end
   
   test 'users should not save without password confirmation' do
-    a = User.create(email: "test@email.com", first_name: "test", last_name: "test", password: "test5", role: roles(:admin))
+    a = User.create(email: "test@email.com", first_name: "test", last_name: "test", password: "test5")
     assert a.id.nil?, "Saved without password confirmation"
   end  
   
   test 'users should not save without password of at least 5' do
-    a = User.create(email: "test@email.com", first_name: "test", last_name: "test", password: "test", password_confirmation: "test", role: roles(:admin))
+    a = User.create(email: "test@email.com", first_name: "test", last_name: "test", password: "test", password_confirmation: "test")
     assert a.id.nil?, "Saved without password length of at least 5"
   end
   
   test 'users should not save if password confirmation does not match password' do
-    a = User.create(email: "test@email.com", first_name: "test", last_name: "test", password: "test5", password_confirmation: "test6", role: roles(:admin))
+    a = User.create(email: "test@email.com", first_name: "test", last_name: "test", password: "test5", password_confirmation: "test6")
     assert a.id.nil?, "Saved without password and password confirmation matching"
   end
   
   test 'users should not save without a valid email (t@t.tt)' do
-    a = User.create(email: "test@email", first_name: "test", last_name: "test", password: "test5", password_confirmation: "test5", role: roles(:admin))
+    a = User.create(email: "test@email", first_name: "test", last_name: "test", password: "test5", password_confirmation: "test5")
     if a.id.nil?
       a.email = "@email.co"
       a.save
@@ -80,7 +80,7 @@ class UserTest < ActiveSupport::TestCase
   end
   
   test 'users should save with email (valid), first and last name, password, and password confirmation(5 characters or longer)' do
-    a = User.create(email: "email@address.com", first_name: "test", last_name: "test", password: "test5", password_confirmation: "test5", role_id: roles(:admin).id)
+    a = User.create(email: "email@address.com", first_name: "test", last_name: "test", password: "test5", password_confirmation: "test5")
     assert_not a.id.nil?, "Failed to save with email"
   end
   
@@ -88,19 +88,19 @@ class UserTest < ActiveSupport::TestCase
   # Test callbacks on creation
   ################################
   test 'password should be saved as encrypted hash' do
-    a = User.create(email: "email@address.com", first_name: "test", last_name: "test", password: "test5", password_confirmation: "test5", role_id: roles(:admin).id)
+    a = User.create(email: "email@address.com", first_name: "test", last_name: "test", password: "test5", password_confirmation: "test5")
     assert_not a.crypted_password.nil?, "Did not encrypt the password"
   end
   
-  ################################
-  # Test active record relationships
-  ################################
-  test 'user should belong to organization' do
-    assert_instance_of Organization, users(:susan).organization, "Belongs_to relationship between user and organization does not exist"
-  end
-  
-  test 'user should belong to role' do
-    assert_instance_of Role, users(:susan).role, "Belongs_to relationship between user and role does not exist"
-  end
+  # ################################
+  # # Test active record relationships
+  # ################################
+  # test 'user should belong to organization' do
+  #   assert_instance_of Organization, users(:susan).organization, "Belongs_to relationship between user and organization does not exist"
+  # end
+  #
+  # test 'user should belong to role' do
+  #   assert_instance_of Role, users(:susan).role, "Belongs_to relationship between user and role does not exist"
+  # end
   
 end

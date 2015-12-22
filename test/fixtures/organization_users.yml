@@ -15,7 +15,7 @@
 one:
   organization: bank
   user: susan
-  role_id: admin
+  role: admin
 
 two:
   organization: factory

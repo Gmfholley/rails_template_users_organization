@@ -32,7 +32,6 @@ class User < ActiveRecord::Base
   validates :email, presence: true, email: true, uniqueness: true
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :role, presence: true
   
   has_many :organization_users
   has_many :organizations, through: :organization_users
