@@ -16,8 +16,6 @@
 #  first_name                      :string
 #  last_name                       :string
 #  profile_picture                 :string
-#  organization_id                 :integer
-#  role_id                         :integer
 #
 # Indexes
 #
