@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   skip_before_filter :require_login, only: [:new, :create]  
   before_action :prevent_duplicate_sessions, only: [:new, :create]
+  before_action :set_user, except: [:new, :create]
+  before_action :require_permission_to_see, except: [:new, :create, :show]
   before_action :set_organization, only: [:new, :create]
    
   def new
@@ -22,7 +24,7 @@ class UsersController < ApplicationController
       @user = login(@user.email, params["user"]["password"])
       redirect_to profile_path, :notice => "Thanks for signing up!"
     else
-      render :new, :notice => "Unable to create your account."
+      render :new, :notice => "Unable to create your account."  
     end
   end
   
@@ -61,6 +63,14 @@ class UsersController < ApplicationController
     if @user
       redirect_to profile_path, :notice => "You are already logged in.  To create a new account, log out first."
     end
+  end
+  
+  def set_user
+    @user = User.find(params[:id])
+  end
+  
+  def require_permission_to_see
+    current_user == @user
   end
   
   def set_organization
