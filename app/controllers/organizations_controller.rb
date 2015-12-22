@@ -13,11 +13,12 @@ class OrganizationsController < ApplicationController
     @organization = Organization.new(organization_params)
     @user = @organization.users.first
     # for new organizations, make the creator the admin
-    @user.role_id = admin_id
+    @organization.organization_users.first.role_id = Role.admin_id
     if @organization.save
       @user = login(@user.email,password_params)
       redirect_to organization_path(@organization.token), :notice => "Thanks for signing up!"
     else
+      @user.destroy
       render :new, :notice => "Unable to create a new organization."
     end
   end
@@ -54,7 +55,7 @@ class OrganizationsController < ApplicationController
         
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_params
-      params.require(:organization).permit(:name, :users_attributes => [:email, :first_name, :last_name, :password,  :password_confirmation, :role_id])
+      params.require(:organization).permit(:name, :users_attributes => [:email, :first_name, :last_name, :password,  :password_confirmation])
     end
         
     def password_params

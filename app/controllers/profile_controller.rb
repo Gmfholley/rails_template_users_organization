@@ -25,7 +25,7 @@ class ProfileController < ApplicationController
   
   private
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :last_name, :profile_picture, :role_id, :organization_id)
+    params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :last_name, :profile_picture)
   end
   
   def set_me_as_user

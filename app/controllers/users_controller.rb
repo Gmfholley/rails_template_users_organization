@@ -14,17 +14,18 @@ class UsersController < ApplicationController
   end
   
   def create
-    @user = User.new(user_params)
-    if !@organization.blank?
-      @user.organization = @organization
+    @user = User.create(user_params)
+    
+    if !@organization.blank? && !@user.id.blank?
+      assoc = OrganizationUser.create(user: @user.id, organization: @organization.id, role_id: Role.user_id)
     end
-        # for users who sign up through the portal, they should be set to users
-    @user.role_id = user_id
-    if @user.save
+    # for users who sign up through the portal, they should be set to users
+    if assoc.id.blank? || @user.id.blank?
+      render :new, :notice => "Unable to create your account."  
+      @user.destroy
+    else
       @user = login(@user.email, params["user"]["password"])
       redirect_to profile_path, :notice => "Thanks for signing up!"
-    else
-      render :new, :notice => "Unable to create your account."  
     end
   end
   
@@ -41,7 +42,7 @@ class UsersController < ApplicationController
   
   private
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :last_name, :profile_picture, :role_id, :organization_id)
+    params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :last_name, :profile_picture)
   end
     
   def set_user
