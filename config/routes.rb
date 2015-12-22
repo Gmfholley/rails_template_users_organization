@@ -14,10 +14,15 @@ Rails.application.routes.draw do
   delete 'profile' => 'profile#destroy'
   get 'profile/edit' => 'profile#edit', as: :edit_profile
   
-  resources :profile, except: [:new, :create, :index]
   resources :users, except: [:edit, :update, :destroy, :index]
   get 'organizations/:id/sign_up' => 'users#new', as: :organization_sign_up
-
+  
+  put 'organizations/:id/users/:user_id' => 'organization_users#update', as: :organization_user
+  patch 'organizations/:id/users/:user_id' => 'organization_users#update'
+  delete 'organizations/:id/users/:user_id' => 'organization_users#destroy'
+  post 'organizations/:id/users/:user_id' => 'organization_users#create'
+  
+  
   resources :organizations, except: :index
 
 

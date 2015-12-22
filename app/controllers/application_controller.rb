@@ -23,8 +23,8 @@ class ApplicationController < ActionController::Base
   # if not an admin, redirects to not_admin path
   #
   # returns nothing
-  def handle_if_not_admin
-    if is_admin?
+  def handle_if_not_authorized
+    if !is_admin?
       not_authorized
     end
   end
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   #
   # returns boolean
   def is_admin?
-    current_user.role.name != 'admin'
+    current_user.role(@organization).id == Role.admin_id
   end
     
   # checks if be current user belongs to @organization and if not redirects them

@@ -1,9 +1,8 @@
 class UsersController < ApplicationController
   skip_before_filter :require_login, only: [:new, :create]  
   before_action :prevent_duplicate_sessions, only: [:new, :create]
-  before_action :set_user, only: [:update, :show]
+  before_action :set_user, only: [:show]
   before_action :set_organization, only: [:new, :create]
-  before_action :has_authorization, only: [:update, :show]
    
   def new
     if @organization.blank?
@@ -46,10 +45,6 @@ class UsersController < ApplicationController
     
   def set_user
     @user = User.find(params[:id])
-  end
-  
-  def has_authorization
-    current_user == @user
   end
   
   def set_organization
