@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   skip_before_filter :require_login, only: [:new, :create]  
   before_action :prevent_duplicate_sessions, only: [:new, :create]
-  before_action :set_user, except: [:new, :create]
-  before_action :has_authorization, except: [:new, :create, :show]
+  before_action :set_user, only: [:update, :show]
   before_action :set_organization, only: [:new, :create]
+  before_action :has_authorization, only: [:update, :show]
    
   def new
     if @organization.blank?
@@ -29,25 +29,14 @@ class UsersController < ApplicationController
   end
   
   def update
-    @user = current_user
     if @user.update(user_params)
-      redirect_to profile_path, :notice => "Account updated!"
+      redirect_to :back, :notice => "Account updated!"
     else
-      render :edit, :notice => "Unable to update the account. #{@user.errors}"
+      redirect_to :back, :notice => "Unable to update the account. #{@user.errors}"
     end
   end
   
   def show
-    @user = User.find(params[:id])
-  end
-  
-  def destroy
-    @user = current_user
-    if @user.destroy
-      redirect_to login_path, :notice => "Your account was deleted."
-    else
-      redirect_to profile_path, :notice => "Sorry.  Something went wrong.  Try again to delete your account."
-    end
   end
   
   private

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # there is no index of users (that appears on the organization page)
   
   resources :profile, except: [:new, :create, :index]
-  resources :users, except: [:index, :edit]
+  resources :users, except: [:edit, :destroy, :index]
   get 'organizations/:id/sign_up' => 'users#new', as: :organization_sign_up
 
   resources :organizations, except: :index
