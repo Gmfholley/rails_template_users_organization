@@ -1,32 +1,6 @@
 class ProfileController < ApplicationController
-  skip_before_filter :require_login, only: [:new, :create]  
-  before_action :prevent_duplicate_sessions, only: [:new, :create]
-  before_action :set_me_as_user, except: [:new, :create]
-  before_action :set_organization, only: [:new, :create]
-   
-  def new
-    if @organization.blank?
-      @user = User.new
-    else
-      @user = @organization.users.build
-    end
-  end
-  
-  def create
-    @user = User.new(user_params)
-    if !@organization.blank?
-      @user.organization = @organization
-    end
-        # for users who sign up through the portal, they should be set to users
-    @user.role_id = user_id
-    if @user.save
-      @user = login(@user.email, params["user"]["password"])
-      redirect_to profile_path, :notice => "Thanks for signing up!"
-    else
-      render :new, :notice => "Unable to create your account."  
-    end
-  end
-  
+  before_action :set_me_as_user
+     
   def edit
   end
   
@@ -58,13 +32,4 @@ class ProfileController < ApplicationController
     @user = current_user
   end
   
-  def prevent_duplicate_sessions
-    if @user
-      redirect_to profile_path, :notice => "You are already logged in.  To create a new account, log out first."
-    end
-  end
-  
-  def set_organization
-    @organization = Organization.find_by(token: params[:id])
-  end  
 end
