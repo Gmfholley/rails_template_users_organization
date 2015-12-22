@@ -95,6 +95,14 @@ class UserTest < ActiveSupport::TestCase
   # ################################
   # # Test active record relationships
   # ################################
+  test 'users should have many organization_users' do
+    assert_instance_of OrganizationUser, users(:susan).organization_users.first, "Has_many relationship does not exist"
+  end
+  
+  test 'users should have many organizations' do
+    assert_instance_of Organization, users(:susan).organizations.first, "Has_many relationship does not exist"
+  end
+  
   # test 'user should belong to organization' do
   #   assert_instance_of Organization, users(:susan).organization, "Belongs_to relationship between user and organization does not exist"
   # end
