@@ -17,7 +17,7 @@ class ProfileController < ApplicationController
   
   def destroy
     if @user.destroy
-      redirect_to login_path, :notice => "Your account was deleted."
+      redirect_to root_path, :notice => "Your account was deleted."
     else
       redirect_to profile_path, :notice => "Sorry.  Something went wrong.  Try again to delete your account."
     end

@@ -51,24 +51,12 @@ class OrganizationsController < ApplicationController
     def set_organization
       @organization = Organization.find_by(token: params[:id])
     end
-    
-    def belongs_to_organization
-      if !@organization.users.include?(current_user)
-        redirect_to profile_path, notice: "You are not authorized to see another organization's page."
-      end
-    end
-    
+        
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_params
       params.require(:organization).permit(:name, :users_attributes => [:email, :first_name, :last_name, :password,  :password_confirmation, :role_id])
     end
-    
-    def prevent_duplicate_sessions
-      if @user
-        redirect_to profile_path, :notice => "You are already logged in.  To create a new account, log out first."
-      end
-    end
-    
+        
     def password_params
        params["organization"]["users_attributes"]["0"]["password"]
     end

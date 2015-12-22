@@ -54,13 +54,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation, :first_name, :last_name, :profile_picture, :role_id, :organization_id)
   end
-  
-  def prevent_duplicate_sessions
-    if @user
-      redirect_to profile_path, :notice => "You are already logged in.  To create a new account, log out first."
-    end
-  end
-  
+    
   def set_user
     @user = User.find(params[:id])
   end
