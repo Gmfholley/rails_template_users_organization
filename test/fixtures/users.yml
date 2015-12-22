@@ -34,7 +34,7 @@ susan:
     email: susanEmail@email.com
     first_name: susan
     last_name: surname
-    organization: bank
+    organizations: bank
     role: admin
     salt: <%= salt = "asdasdastr4325234324sdfds" %>
     crypted_password: <%= Sorcery::CryptoProviders::BCrypt.encrypt("secret", salt) %>
