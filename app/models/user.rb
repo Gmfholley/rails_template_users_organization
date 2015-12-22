@@ -36,7 +36,13 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
   validates :role, presence: true
   
-  belongs_to :organization
-  belongs_to :role
+  has_many :organization_users
+  has_many :organizations, through: :organization_users
+  
+  def role(organization)
+    if self.organizations.include?(organization)
+      OrganizationUser.find_by(user_id: self.id, organization_id: organization.id).role
+    end
+  end
   
 end

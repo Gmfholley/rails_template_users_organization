@@ -12,7 +12,8 @@
 class Organization < ActiveRecord::Base
   validates :name, presence: true
   
-  has_many :users
+  has_many :organization_users
+  has_many :users, through :organization_users
   accepts_nested_attributes_for :users, reject_if: :all_blank
   
   before_create :generate_token
