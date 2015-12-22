@@ -4,12 +4,14 @@ class UsersController < ApplicationController
   before_action :set_organization, only: [:new, :create]
    
   def new
-    @user = @organization.users.build
-    binding.pry
+    if @organization.blank?
+      @user = User.new
+    else
+      @user = @organization.users.build
+    end
   end
   
   def create
-    binding.pry
     @user = User.new(user_params)
     if !@organization.blank?
       @user.organization = @organization
