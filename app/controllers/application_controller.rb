@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   
   # if not an admin, redirects to not_admin path
   #
-  # returns a boolean
+  # returns nothing
   def handle_if_not_admin
     if is_admin?
       not_authorized
@@ -50,17 +50,24 @@ class ApplicationController < ActionController::Base
     Role.find_by(name: 'user').id
   end
   
-  # checks if be
+  # checks if be current user belongs to @organization and if not redirects them
   #
-  # returns an integer
-  def belongs_to_organization
-    if @organization.users.include?(current_user)
-      redirect_to profile_path, notice: "You are not authorized to see another organization's page."
-    end
+  # returns an boolean
+  def belongs_to_organization?
+    @organization.users.include?(current_user)
   end
   
+  # if not an admin, redirects to not_admin path
+  #
+  # returns nothing
+  def handle_if_not_member
+    if belongs_to_organization?
+      not_authorized
+    end
+  end
+    
   def prevent_duplicate_sessions
-    if @user
+    if current_user
       redirect_to profile_path, :notice => "You are already logged in.  To create a new account, log out first."
     end
   end  
