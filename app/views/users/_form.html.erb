@@ -9,7 +9,13 @@
       <%= form_for @user do |f| %>
       <div class="form-group">
         <%= f.label :organization_id %>
-        <%= f.select :organization_id, Organization.all.collect {|o| [o.name, o.id] }, {include_blank: true}, {class: "form-control", disabled: !@organization.blank?, value: @user.organization_id} %>
+        <% if @organization.blank? %>
+          <%= f.select :organization_id, Organization.all.collect {|o| [o.name, o.id] }, {include_blank: true}, {class: "form-control"} %>
+        <% else %>
+          <%= f.select :organization_id, [[@organization.name, @organization.id]], {include_blank: false}, {class: "form-control", readonly: true} %>
+        
+        <% end %>
+        
       </div>
           <div class="form-group">
              <%= f.label :email %><br />
