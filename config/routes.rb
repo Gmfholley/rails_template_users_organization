@@ -1,18 +1,16 @@
 Rails.application.routes.draw do
-  
-  get 'profile/new'
-
-  get 'profile/create'
-
-  get 'profile/edit'
-
-  get 'profile/update'
-
-  get 'profile/destroy'
-
-  get 'profile/show'
 
   root 'welcome#index'
+
+  
+  get 'profile' => 'profile#show', as: :profile
+  get 'profile/new' => 'profile#new', as: :new_profile
+  post 'profile' => 'profile#create'
+  get 'profile/edit' => 'profile#edit', as: :edit_profile
+  put 'profile' => 'profile#update'
+  patch 'profile' => 'profile/#update'
+  delete 'profile' => 'profile#destroy'
+  
 
   post 'password_resets' => 'password_resets#create', as: :password_resets
   get 'password_resets/:id/edit' => 'password_resets#edit', as: :edit_password_resets
