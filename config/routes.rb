@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   delete 'delete_profile' => 'users#destroy', as: :delete_profile
   get 'users/new' => 'users#new', as: :new_user
   post 'users' => 'users#create'
-  get 'users/:user_name' => 'users#show', as: :user
+  get 'users/:id' => 'users#show', as: :user
   get '/' => 'users#show'
   
   post 'login' => 'user_sessions#create', as: :login
