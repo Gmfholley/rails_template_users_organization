@@ -24,7 +24,7 @@ class RoleTest < ActiveSupport::TestCase
     assert a.save,  "Did not save with a name"
   end
   
-  test 'roles should have many users' do
-    assert_instance_of User, roles(:admin).users.first, "Has_many relationship does not exist"
+  test 'roles should have many organization_users' do
+    assert_instance_of OrganizationUser, roles(:admin).organization_users.first, "Has_many relationship does not exist"
   end
 end

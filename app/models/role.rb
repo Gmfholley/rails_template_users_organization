@@ -10,7 +10,7 @@
 
 class Role < ActiveRecord::Base
   validates :name, presence: true
-  has_many :users
+  has_many :organization_users
   
   
   # finds Role id with a name of admin
