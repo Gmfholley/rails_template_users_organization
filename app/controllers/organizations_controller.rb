@@ -2,8 +2,8 @@ class OrganizationsController < ApplicationController
   skip_before_filter :require_login, only: [:new, :create]
   before_action :prevent_duplicate_sessions, only: [:new, :create]
   before_action :set_organization, except: [:new, :create]
-  before_action :is_admin, only: [:edit, :update, :destroy]
-  before_action :belongs_to_organization, only: [:edit, :update, :show, :destroy]
+  before_action :handle_if_not_admin, only: [:edit, :update, :destroy]
+  before_action :handle_if_not_member, only: [:edit, :update, :show, :destroy]
   
   def new
     @organization = Organization.new
