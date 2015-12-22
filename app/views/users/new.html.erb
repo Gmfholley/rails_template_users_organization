@@ -1,5 +1,8 @@
 <div class="container">
-  <h2 class="accent-font">Create a new account</h2>
-
+  <% if @organization.blank? %>
+    <h2 class="accent-font">Sign up!</h2>
+  <% else %>
+    <h2 class="accent-font">Join <%= @organization.name %>'s group!</h2>
+  <% end %>
   <%= render 'form' %>  
 </div>

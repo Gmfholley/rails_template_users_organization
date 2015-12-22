@@ -18,14 +18,21 @@ class UsersController < ApplicationController
     
     if !@organization.blank? && !@user.id.blank?
       assoc = OrganizationUser.create(user: @user.id, organization: @organization.id, role_id: Role.user_id)
-    end
-    # for users who sign up through the portal, they should be set to users
-    if assoc.id.blank? || @user.id.blank?
-      render :new, :notice => "Unable to create your account."  
-      @user.destroy
+     if assoc.blank?
+       render :new, :notice => "Unable to create your account."  
+       @user.destroy
+     else
+       @user = login(@user.email, params["user"]["password"])
+       redirect_to profile_path, :notice => "Thanks for signing up!"
+     end 
     else
-      @user = login(@user.email, params["user"]["password"])
-      redirect_to profile_path, :notice => "Thanks for signing up!"
+      # for users who sign up through the portal, they should be set to users
+      if @user.id.  blank?
+        render :new, :notice => "Unable to create your account."  
+      else
+        @user = login(@user.email, params["user"]["password"])
+        redirect_to profile_path, :notice => "Thanks for signing up!"
+      end
     end
   end
   
