@@ -35,21 +35,7 @@ class ApplicationController < ActionController::Base
   def is_admin?
     current_user.role.name != 'admin'
   end
-  
-  # finds Role id with a name of admin
-  #
-  # returns an integer
-  def admin_id
-    Role.find_by(name: 'admin').id
-  end
-
-  # finds Role id with a name of user
-  #
-  # returns an integer  
-  def user_id
-    Role.find_by(name: 'user').id
-  end
-  
+    
   # checks if be current user belongs to @organization and if not redirects them
   #
   # returns an boolean
