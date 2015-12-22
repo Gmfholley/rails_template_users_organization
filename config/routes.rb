@@ -29,9 +29,7 @@ Rails.application.routes.draw do
   resources :organizations, except: :index
   
   get 'organizations/:id/sign_up' => 'users#new', as: :organization_sign_up
-  
-  root :to => 'users#show'
-  
+    
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
