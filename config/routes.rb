@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
   
+  get 'profile/new'
+
+  get 'profile/create'
+
+  get 'profile/edit'
+
+  get 'profile/update'
+
+  get 'profile/destroy'
+
+  get 'profile/show'
+
   root 'welcome#index'
 
   post 'password_resets' => 'password_resets#create', as: :password_resets
