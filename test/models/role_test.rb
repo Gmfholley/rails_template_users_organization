@@ -27,4 +27,13 @@ class RoleTest < ActiveSupport::TestCase
   test 'roles should have many organization_users' do
     assert_instance_of OrganizationUser, roles(:admin).organization_users.first, "Has_many relationship does not exist"
   end
+  
+  test 'Role.admin_id should return an integer or nil if not found' do
+    assert Role.admin_id, "Method does not appear to be called"
+  end
+  
+  test 'Role.user_id should return an integer or nil if not found' do
+    assert Role.admin_id, "Method does not appear to be called"
+  end
+  
 end
