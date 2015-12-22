@@ -18,6 +18,6 @@ class OrganizationUser < ActiveRecord::Base
   validates :user, presence: true
   validates :role, presence: true
   validates :organization, presence: true
-  validates_uniqueness_of :user_id, scope: :organization_id
+  validates_uniqueness_of :user, scope: :organization
   
 end
