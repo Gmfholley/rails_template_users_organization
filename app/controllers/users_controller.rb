@@ -28,16 +28,12 @@ class UsersController < ApplicationController
     end
   end
   
-  def edit
-    @user = current_user
-  end
-  
   def update
     @user = current_user
     if @user.update(user_params)
       redirect_to profile_path, :notice => "Account updated!"
     else
-      render :edit, :notice => "Unable to update your account. #{@user.errors}"
+      render :edit, :notice => "Unable to update the account. #{@user.errors}"
     end
   end
   
