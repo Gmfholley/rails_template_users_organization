@@ -38,20 +38,34 @@ class OrganizationsControllerTest < ActionController::TestCase
     assert_redirected_to profile_path
   end
   
-  test "should get edit" do
+  test "should get edit if an admin" do
     login_user(user = @current_user, route = login_path) 
     get :edit, id: @organization.token
     assert_response :success
   end
+  
+  test "should not get edit if not an admin" do
+    organization = organizations(:factory)
+    login_user(user = users(:david), route = login_path) 
+    get :edit, id: organization.token
+    assert_redirected_to profile_path
+  end
 
-  test "should update organization" do
+  test "should update organization if an admin" do
     login_user(user = @current_user, route = login_path) 
     patch :update, id: @organization.token, organization: { name: "changedName" }
     assert_equal assigns(:organization).name, "changedName"
     assert_redirected_to organization_path(@organization.token)
   end
 
-  test "should destroy organization" do
+  test "should not get update if not an admin" do
+    organization = organizations(:factory)
+    login_user(user = users(:david), route = login_path) 
+    patch :update, id: organization.token, organization: { name: "changedName" }
+    assert_redirected_to profile_path
+  end
+
+  test "should destroy organization if an admin" do
     login_user(user = @current_user, route = login_path) 
     assert_difference('Organization.count', -1) do
       delete :destroy, id: @organization.token
@@ -59,4 +73,13 @@ class OrganizationsControllerTest < ActionController::TestCase
 
     assert_redirected_to login_path
   end  
+  
+  test "should not destroy if not an admin" do
+    organization = organizations(:factory)
+    login_user(user = users(:david), route = login_path) 
+    assert_no_difference('Organization.count') do
+      delete :destroy, id: organization.token
+    end
+    assert_redirected_to profile_path
+  end
 end
