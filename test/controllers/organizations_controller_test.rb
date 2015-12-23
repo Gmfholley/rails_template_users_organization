@@ -7,7 +7,6 @@ class OrganizationsControllerTest < ActionController::TestCase
   setup do
     @organization = organizations(:bank)
     @current_user = users(:susan)
-    login_user(user = @current_user, route = login_path) 
   end
   
   test "should get new" do
@@ -24,22 +23,26 @@ class OrganizationsControllerTest < ActionController::TestCase
   end
 
   test "should show organization" do
+    login_user(user = @current_user, route = login_path) 
     get :show, id: @organization.token
     assert_response :success
   end
   
   test "should get edit" do
+    login_user(user = @current_user, route = login_path) 
     get :edit, id: @organization.token
     assert_response :success
   end
 
   test "should update organization" do
+    login_user(user = @current_user, route = login_path) 
     patch :update, id: @organization.token, organization: { name: "changedName" }
     assert_equal assigns(:organization).name, "changedName"
     assert_redirected_to organization_path(@organization.token)
   end
 
   test "should destroy organization" do
+    login_user(user = @current_user, route = login_path) 
     assert_difference('Organization.count', -1) do
       delete :destroy, id: @organization.token
     end

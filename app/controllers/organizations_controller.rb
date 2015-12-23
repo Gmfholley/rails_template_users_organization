@@ -2,7 +2,7 @@ class OrganizationsController < ApplicationController
   skip_before_filter :require_login, only: [:new, :create]
   before_action :prevent_duplicate_sessions, only: [:new, :create]
   before_action :set_organization, except: [:new, :create]
-  before_action :handle_if_not_admin, only: [:edit, :update, :destroy]
+  before_action :handle_if_not_authorized, only: [:edit, :update, :destroy]
   before_action :handle_if_not_member, only: [:edit, :update, :show, :destroy]
   
   def new
@@ -10,16 +10,18 @@ class OrganizationsController < ApplicationController
   end
   
   def create
-    @organization = Organization.new(organization_params)
-    @user = @organization.users.first
-    # for new organizations, make the creator the admin
-    @organization.organization_users.first.role_id = Role.admin_id
-    if @organization.save
+    @organization = Organization.create(organization_only_params)
+    
+    @user = User.create(organization_user_only_params)
+    @org_user = OrganizationUser.create(organization: @organization, user: @user, role_id: Role.admin_id)
+    
+    if @org_user.blank?
+      @user.destroy
+      @organization.destroy
+      render :new, :notice => "Unable to create a new organization."
+    else
       @user = login(@user.email,password_params)
       redirect_to organization_path(@organization.token), :notice => "Thanks for signing up!"
-    else
-      @user.destroy
-      render :new, :notice => "Unable to create a new organization."
     end
   end
   
@@ -27,7 +29,7 @@ class OrganizationsController < ApplicationController
   end
   
   def update
-    if @organization.update(organization_params)
+    if @organization.update(organization_only_params)
       redirect_to organization_path(@organization.token), :notice => "Account updated!"
     else
       render :edit, :notice => "Unable to update your account."
@@ -36,7 +38,6 @@ class OrganizationsController < ApplicationController
   
   def show
     @user = current_user
-    @is_admin = is_admin?
   end
   
   def destroy
@@ -52,10 +53,18 @@ class OrganizationsController < ApplicationController
     def set_organization
       @organization = Organization.find_by(token: params[:id])
     end
-        
+    
+    def organization_and_user_params
+      params.require(:organization).permit(:users_attributes => [:email, :first_name, :last_name, :password,  :password_confirmation])
+    end 
+    
+    def organization_user_only_params
+      organization_and_user_params["users_attributes"]["0"]
+    end
+    
     # Never trust parameters from the scary internet, only allow the white list through.
-    def organization_params
-      params.require(:organization).permit(:name, :users_attributes => [:email, :first_name, :last_name, :password,  :password_confirmation])
+    def organization_only_params
+      params.require(:organization).permit(:name)
     end
         
     def password_params

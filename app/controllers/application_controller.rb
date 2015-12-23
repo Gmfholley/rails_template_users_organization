@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
   #
   # returns nothing
   def handle_if_not_member
-    if belongs_to_organization?
+    if !belongs_to_organization?
       not_authorized
     end
   end
