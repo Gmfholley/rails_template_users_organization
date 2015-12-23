@@ -18,7 +18,6 @@ class Role < ActiveRecord::Base
   # returns an integer
   def self.admin
     role = Role.find_by(name: 'admin') || Role.new
-    role.id
   end
 
   # finds Role id with a name of user
@@ -26,7 +25,6 @@ class Role < ActiveRecord::Base
   # returns an integer  
   def self.user
     role = Role.find_by(name: 'user').id || Role.new
-    role.id
   end
   
 end
