@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   
   def create
     @user = User.create(user_params)
-    
+    # for users that sign up through an organization page, also create the association
     if !@organization.blank? && !@user.id.blank?
       assoc = OrganizationUser.create(user: @user.id, organization: @organization.id, role_id: Role.user_id)
      if assoc.blank?
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
        redirect_to profile_path, :notice => "Thanks for signing up!"
      end 
     else
-      # for users who sign up through the portal, they should be set to users
+      # for users who sign up outside of an organization page, do not create association
       if @user.id.blank?
         render :new, :notice => "Unable to create your account."  
       else

@@ -13,12 +13,12 @@ class UsersControllerTest < ActionController::TestCase
   #   login_user(user = @current_user, route = login_path)
   # end
   
-  test "should get new" do
+  test "should get new without logging in" do
     get :new
     assert_response :success
   end
   
-  test "should create user" do
+  test "should create user with correct params and not logging in" do
     assert_difference('User.count') do
       post :create, user: { email: "test@t.com", first_name: "test", last_name: "test", password: "password", password_confirmation: "password" }
     end
