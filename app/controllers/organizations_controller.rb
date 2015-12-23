@@ -13,7 +13,7 @@ class OrganizationsController < ApplicationController
     @organization = Organization.create(organization_only_params)
     
     @user = User.create(organization_user_only_params)
-    @org_user = OrganizationUser.create(organization: @organization, user: @user, role_id: Role.admin_id)
+    @org_user = OrganizationUser.create(organization: @organization, user: @user, role: Role.admin)
     
     if @org_user.blank?
       @user.destroy

@@ -21,7 +21,7 @@ class OrganizationsControllerTest < ActionController::TestCase
 
     assert_equal assigns(:organization).users.count, 1, "Did not create a user"
     assert_equal assigns(:organization).organization_users.count, 1, "Did not create an organization_user relationship"
-    assert_equal assigns(:organization).organization_users.first.role.id, Role.admin_id, "The created organization_user is not an admin"
+    assert_equal assigns(:organization).organization_users.first.role, Role.admin, "The created organization_user is not an admin"
     
     assert_redirected_to organization_path(assigns(:organization).token), "Did not redirect to the organization path"
   end
@@ -62,6 +62,13 @@ class OrganizationsControllerTest < ActionController::TestCase
     organization = organizations(:factory)
     login_user(user = users(:david), route = login_path) 
     patch :update, id: organization.token, organization: { name: "changedName" }
+    assert_redirected_to profile_path
+  end
+  
+  test "should not get update if an admin but not of this organization" do
+    @organization = organizations(:factory)
+    login_user(user = users(:susan), route = login_path) 
+    patch :update, id: @organization.token, organization: { name: "changedName" }
     assert_redirected_to profile_path
   end
 
