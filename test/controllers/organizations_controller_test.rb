@@ -9,23 +9,33 @@ class OrganizationsControllerTest < ActionController::TestCase
     @current_user = users(:susan)
   end
   
-  test "should get new" do
+  test "should get new without logging in" do
     get :new
     assert_response :success
   end
 
-  test "should create organization" do
+  test "should create organization, associated user, and relationship" do
     assert_difference('Organization.count') do
       post :create, organization: { name: "test", :users_attributes => {"0" => {email: "test@test.com", first_name: "test", last_name: "test", password: "password", password_confirmation: "password"}}  }
     end
 
-    assert_redirected_to organization_path(assigns(:organization).token)
+    assert_equal assigns(:organization).users.count, 1, "Did not create a user"
+    assert_equal assigns(:organization).organization_users.count, 1, "Did not create an organization_user relationship"
+    assert_equal assigns(:organization).organization_users.first.role.id, Role.admin_id, "The created organization_user is not an admin"
+    
+    assert_redirected_to organization_path(assigns(:organization).token), "Did not redirect to the organization path"
   end
 
-  test "should show organization" do
+  test "should show organization if a member" do
     login_user(user = @current_user, route = login_path) 
     get :show, id: @organization.token
     assert_response :success
+  end
+  
+  test "should not show organization if not a member" do
+    login_user(user = users(:david), route = login_path)
+    get :show, id: @organization.token
+    assert_redirected_to profile_path
   end
   
   test "should get edit" do
