@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   #
   # returns boolean
   def is_admin?
-    current_user.role(@organization).id == Role.admin.id
+    current_user.role(@organization) == Role.admin
   end
     
   # checks if be current user belongs to @organization and if not redirects them
