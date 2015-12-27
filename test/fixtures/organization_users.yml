@@ -20,4 +20,4 @@ one:
 two:
   organization: factory
   user: david
-  role: other
+  role: user

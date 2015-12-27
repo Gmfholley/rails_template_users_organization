@@ -13,5 +13,5 @@
 admin:
   name: admin
 
-other:
+user:
   name: user

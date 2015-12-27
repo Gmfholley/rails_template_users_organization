@@ -103,6 +103,26 @@ class UserTest < ActiveSupport::TestCase
     assert_instance_of Organization, users(:susan).organizations.first, "Has_many relationship does not exist"
   end
   
+  # ##############################
+  # # Test role method of user
+  # ###############################
+  test '.role method of a user should return their role for an organization' do 
+    # susan is the admin of the bank
+    @user = users(:susan)
+    @organization = organizations(:bank)
+    assert_equal @user.role(@organization), Role.admin, "Susan is not an admin of the bank"
+   
+    # susan is not a member of the factory
+    @organization = organizations(:factory)
+    assert_equal @user.role(@organization), nil, "Susan is somehow a member of the factory"
+    
+    # david is a user of the factory
+    @user = users(:david)
+    assert_equal @user.role(@organization), Role.user, "David is not a user of the factory"
+    
+  end
+
+  
   # test 'user should belong to organization' do
   #   assert_instance_of Organization, users(:susan).organization, "Belongs_to relationship between user and organization does not exist"
   # end
