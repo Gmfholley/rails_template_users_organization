@@ -10,10 +10,12 @@ class OrganizationUsersController < ApplicationController
     if @organization_user.create
       respond_to do |format|
         format.json { render :json => @organization_user, status: :success }
+        format.html { redirect_to profile_path, notice: "Thanks!" }
       end
     else
       respond_to do |format|
         format.json { render :json => @organization_user.errors, status: :failure }
+        format.html { redirect_to profile_path, notice: "Something happened.  Try again." }        
       end
     
     end
@@ -23,10 +25,12 @@ class OrganizationUsersController < ApplicationController
     if @organization_user.update(organization_user_params)
       respond_to do |format|
         format.json { render :json => @organization_user, status: :success }
+        format.html { redirect_to :back, notice: "Thanks!" }
       end
     else
       respond_to do |format|
         format.json { render :json => @organization_user.errors, status: :failure }
+        format.html { redirect_to :back, notice: "Sorry, that didn't work." }
       end
     end
   end
@@ -35,10 +39,12 @@ class OrganizationUsersController < ApplicationController
     if @organization_user.destroy
       respond_to do |format|
         format.json { render :nothing, status: :no_content }
+        format.html { redirect_to :back, notice: "Thanks!" }
       end
     else
       respond_to do |format|
         format.json { render :json => @organization_user.errors, status: :failure }
+        format.html { redirect_to :back, notice: "Sorry, that didn't work." } 
       end
     end
   end
