@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
-  skip_before_filter :require_login, only: [:new, :create]  
-  before_action :prevent_duplicate_sessions, only: [:new, :create]
+  skip_before_filter :require_login, only: [:new, :create]
+  before_action :prevent_duplicate_sessions, only: [:create]
   before_action :set_user, only: [:show]
   before_action :set_organization, only: [:new, :create]
+  before_action :handle_logged_in_user_to_this_organization, only: [:new]
    
   def new
     if @organization.blank?
@@ -49,5 +50,11 @@ class UsersController < ApplicationController
   
   def set_organization
     @organization = Organization.find_by(token: params[:id])
+  end
+  
+  def handle_logged_in_user_to_this_organization
+    if logged_in?
+      redirect_to organization_users_path(@organization.id, current_user.id)
+    end
   end  
 end

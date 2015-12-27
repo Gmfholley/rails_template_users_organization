@@ -1,0 +1,4 @@
+    <h2 class="accent-font">Join <%= @organization.name %>'s group!</h2>
+    <%= link_to 'Join!', organization_users_path(@organization.id, @user.id), method: "post", class: "btn" %>
+
+<%= render 'form_with_nested_attributes' %>

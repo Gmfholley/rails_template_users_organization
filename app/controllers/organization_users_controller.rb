@@ -2,6 +2,9 @@ class OrganizationUsersController < ApplicationController
   before_action :set_organization_user
   before_action :has_authorization
      
+  def new
+  end
+  
   def create
     @organization_user.role = Role.user
     if @organization_user.create
