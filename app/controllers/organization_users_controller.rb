@@ -3,6 +3,7 @@ class OrganizationUsersController < ApplicationController
   before_action :has_authorization
      
   def create
+    @organization_user.role = Role.user
     if @organization_user.create
       respond_to do |format|
         format.json { render :json => @organization_user, status: :success }
@@ -67,12 +68,35 @@ class OrganizationUsersController < ApplicationController
     @change_user == current_user
   end
   
+  def attempting_to_make_an_admin?
+    params[:organization_users][:role_id] == Role.admin.id
+  end
+  
+  
+  # if you are an admin
+  # if you are the current user && you are not attempting to make yourself an admin
+  # ==> authorized
+  
+  # Not authorized
+  # If you are not an admin nor are you the current user
+  
+  # 1. An Admin
+  # 2. A current user
+  # 3. a different user, not an admin
+  #
+  # if not an admin && not a current user
+  # 1. false && true or false => false => authorized
+  # 2. true && false => false => authorized
+  # 3. true && true => true => not authorized 
+  
   # if not an admin or the user him/herself, redirects to not_authorized path
   #
   # returns nothing
   def has_authorization
-    if !is_admin? || !change_user_is_current_user?
-      not_authorized
+    if !is_admin? && !change_user_is_current_user?
+      if attempting_to_make_an_admin? && !is_admin?
+        not_authorized
+      end
     end
   end
   
