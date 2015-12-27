@@ -1,6 +1,8 @@
 <div class="row">
   <h2 class="accent-font text-center">This is <%= @user.first_name %>'s page</h2>
-  <h4 class="text-center">Member of <%= link_to @user.organizations.first.name, organization_path(@user.organizations.first.token) %></h4>
+  <% @user.organizations.each do |org| %>
+    <h4 class="text-center">Member of <%= link_to org.first.name, organization_path(org.first.token) %></h4>
+  <% end %>
   <div class="row">
   </div>  
 </div>
