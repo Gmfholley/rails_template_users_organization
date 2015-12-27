@@ -6,7 +6,9 @@ class OrganizationUsersController < ApplicationController
   end
   
   def create
-    @organization_user.role = Role.user
+    if @organization_user.role.blank?
+      @organization_user.role = Role.user
+    end
     if @organization_user.create
       respond_to do |format|
         format.json { render :json => @organization_user, status: :success }
