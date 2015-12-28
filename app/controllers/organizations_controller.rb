@@ -38,6 +38,8 @@ class OrganizationsController < ApplicationController
   def show
     @user = current_user
     @is_admin = is_admin?
+    @admin_id = Role.admin.id
+    @user_id = Role.user.id
   end
   
   def destroy
