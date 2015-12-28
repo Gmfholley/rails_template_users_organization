@@ -13,7 +13,7 @@ class OrganizationUsersController < ApplicationController
       end
     else
       respond_to do |format|
-        format.json { render :json => @organization_user.errors, status: :failure }
+        format.json { render :json => @organization_user.errors.full_messages, status: 422}
         format.html { redirect_to :back, notice: "Oops!  Something happened.  Try again." }        
       end
     
@@ -28,8 +28,8 @@ class OrganizationUsersController < ApplicationController
       end
     else
       respond_to do |format|
-        format.json { render :json => @organization_user.errors, status: :failure }
-        format.html { redirect_to :back, notice: "Oops!  Something happened.  Try again." }
+        format.json { render :json => @organization_user.errors.full_messages, status: 422 }
+        format.html { redirect_to :back, notice: "Oops!  Something happened.  Try again."  }
       end
     end
   end
@@ -37,12 +37,12 @@ class OrganizationUsersController < ApplicationController
   def destroy
     if @organization_user.destroy
       respond_to do |format|
-        format.json { render :nothing, status: :no_content }
+        format.json { render :nothing, status: :success }
         format.html { redirect_to :back, notice: "Thanks!  #{@change_user.first_name} was removed from #{@organization.name}." }
       end
     else
       respond_to do |format|
-        format.json { render :json => @organization_user.errors, status: :failure }
+        format.json { render :json => @organization_user.errors.full_messages, status: 422 }
         format.html { redirect_to :back, notice: "Oops!  Something happened.  Try again." } 
       end
     end
