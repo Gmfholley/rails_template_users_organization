@@ -114,10 +114,8 @@ class OrganizationUsersController < ApplicationController
   def has_authorization
     if !is_admin? && !change_user_is_current_user?
       not_authorized
-    else
-      if attempting_to_make_an_admin? && !is_admin?
-        not_authorized
-      end
+    elsif attempting_to_make_an_admin? && !is_admin?
+      not_authorized
     end
   end
   
