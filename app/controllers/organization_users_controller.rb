@@ -73,10 +73,13 @@ class OrganizationUsersController < ApplicationController
   end
   
   def set_new_role
-    if params[:organization_user].blank?
+    if params[:organization_user].blank? || params[:organization_user][:role_id].blank?
       @role = Role.user
     else
       @role = Role.find(params[:organization_user][:role_id])
+    end
+    if @role.blank?
+      @role = Role.user
     end
   end
   

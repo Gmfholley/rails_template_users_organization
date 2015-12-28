@@ -9,32 +9,35 @@ class OrganizationUsersControllerTest < ActionController::TestCase
   include Sorcery::TestHelpers::Rails::Controller
   
   setup do
-    @organization = organizations(:bank)
+    @organization_new = organizations(:factory)
+    @organization_current = organizations(:bank)
     @current_user = users(:susan)
+    login_user(user = @current_user, route = login_path) 
+    request.env["HTTP_REFERER"] = profile_path
   end
   
   test "should get new" do
-    get :new, id: @organization.token, user_id: @current_user.id
+    get :new, id: @organization_new.token, user_id: @current_user.id
     assert_response :success
   end
   
   test "should get create" do 
-    assert_difference('User.count') do
-      post :create, id: @organization.token, user_id: @current_user.id, organization_user: { organization_id: @organization.id, user_id: @user.id }
+    assert_difference('OrganizationUser.count', 1) do
+      post :create, id: @organization_new.token, user_id: @current_user.id, organization_user: { organization_id: @organization_new.id, user_id: @current_user.id }
     end
-    assert_response :success    
+    assert_redirected_to :back    
   end
   
   test "should get update" do
-    put :update, id: @organization.token, user_id: @current_user.id, organization_user: { organization_id: @organization.id, user_id: @user.id }
-    assert_response :success
+    put :update, id: @organization_current.token, user_id: @current_user.id, organization_user: { organization_id: @organization_current.id, user_id: @current_user.id }
+    assert_redirected_to :back    
   end
   
   test "should get destroy" do 
-    assert_difference('Organization.count', -1) do
-      delete :destroy, id: @organization.token, user_id: @current_user.id, organization_user: { organization_id: @organization.id, user_id: @user.id }
+    assert_difference('OrganizationUser.count', -1) do
+      delete :destroy, id: @organization_current.token, user_id: @current_user.id, organization_user: { organization_id: @organization_current.id, user_id: @current_user.id }
     end
-    assert_response :success    
+    assert_redirected_to :back    
   end
   
   
