@@ -111,6 +111,7 @@ class OrganizationUsersController < ApplicationController
   # if not an admin or the user him/herself, redirects to not_authorized path
   #
   # returns nothing
+  # TODO - make this prettier
   def has_authorization
     if !is_admin? && !change_user_is_current_user?
       not_authorized
