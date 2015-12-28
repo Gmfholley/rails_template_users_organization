@@ -20,4 +20,10 @@ class OrganizationUser < ActiveRecord::Base
   validates :organization, presence: true
   validates_uniqueness_of :user, scope: :organization
   
+  after_initialize :set_default_role, :if => :new_record?
+
+  def set_default_role
+    self.role ||= Role.user
+  end
+  
 end

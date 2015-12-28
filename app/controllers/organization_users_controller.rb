@@ -9,12 +9,12 @@ class OrganizationUsersController < ApplicationController
     if @organization_user.save
       respond_to do |format|
         format.json { render :json => @organization_user, status: :success }
-        format.html { redirect_to profile_path, notice: "Thanks!" }
+        format.html { redirect_to :back, notice: "Thanks! #{@change_user.first_name} was added to #{@organization.name}" }
       end
     else
       respond_to do |format|
         format.json { render :json => @organization_user.errors, status: :failure }
-        format.html { redirect_to profile_path, notice: "Something happened.  Try again." }        
+        format.html { redirect_to :back, notice: "Oops!  Something happened.  Try again." }        
       end
     
     end
@@ -24,12 +24,12 @@ class OrganizationUsersController < ApplicationController
     if @organization_user.update(organization_user_params)
       respond_to do |format|
         format.json { render :json => @organization_user, status: :success }
-        format.html { redirect_to :back, notice: "Thanks!" }
+        format.html { redirect_to :back, notice: "Thanks! #{@change_user.first_name}'s relationship with #{@organization.name} was updated." }
       end
     else
       respond_to do |format|
         format.json { render :json => @organization_user.errors, status: :failure }
-        format.html { redirect_to :back, notice: "Sorry, that didn't work." }
+        format.html { redirect_to :back, notice: "Oops!  Something happened.  Try again." }
       end
     end
   end
@@ -38,12 +38,12 @@ class OrganizationUsersController < ApplicationController
     if @organization_user.destroy
       respond_to do |format|
         format.json { render :nothing, status: :no_content }
-        format.html { redirect_to :back, notice: "Thanks!" }
+        format.html { redirect_to :back, notice: "Thanks!  #{@change_user.first_name} was removed from #{@organization.name}." }
       end
     else
       respond_to do |format|
         format.json { render :json => @organization_user.errors, status: :failure }
-        format.html { redirect_to :back, notice: "Sorry, that didn't work." } 
+        format.html { redirect_to :back, notice: "Oops!  Something happened.  Try again." } 
       end
     end
   end
@@ -53,7 +53,7 @@ class OrganizationUsersController < ApplicationController
   def set_organization
     @organization = Organization.find_by(token: params[:id])
     if @organization.blank?
-      redirect_to :back, notice: "That is not an organization."
+      redirect_to :back, notice: "Sorry, that is not a valid request."
     end
   end
   
@@ -68,17 +68,16 @@ class OrganizationUsersController < ApplicationController
       @change_user = User.find(params[:user_id])
     end
     if @change_user.blank?
-      redirect_to :back, notice: "That is not a user."
+      redirect_to :back, notice: "Sorry, that is not a valid request."
     end
   end
   
   def set_new_role
-    if params[:role_id].blank?
+    if params[:organization_user].blank?
       @role = Role.user
     else
-      @role = Role.find(params[:role_id])
+      @role = Role.find(params[:organization_user][:role_id])
     end
-    
   end
   
   def set_organization_user
@@ -89,10 +88,18 @@ class OrganizationUsersController < ApplicationController
     @organization_user.role = @role
   end
   
+  # is the user to be changed the same as the logged in user?
+  #
+  # returns boolean
   def change_user_is_current_user?
     @change_user == current_user
   end
   
+  # if the post/put/patch params are attempting to update to an admin
+  # if they don't exist, the attempt is not being made
+  #
+  #
+  # returns boolean
   def attempting_to_make_an_admin?
     if params[:organization_users]
       params[:organization_users][:role_id] == Role.admin.id
@@ -101,31 +108,14 @@ class OrganizationUsersController < ApplicationController
     end
   end
   
-  
   # if you are an admin
+  # OR
   # if you are the current user && you are not attempting to make yourself an admin
   # ==> authorized
-  
-  # Not authorized
-  # If you are not an admin nor are you the current user
-  
-  # 1. An Admin
-  # 2. A current user
-  # 3. a different user, not an admin
-  #
-  # if not an admin && not a current user
-  # 1. false && true or false => false => authorized
-  # 2. true && false => false => authorized
-  # 3. true && true => true => not authorized 
-  
-  # if not an admin or the user him/herself, redirects to not_authorized path
   #
   # returns nothing
-  # TODO - make this prettier
   def has_authorization
-    if !is_admin? && !change_user_is_current_user?
-      not_authorized
-    elsif attempting_to_make_an_admin? && !is_admin?
+    if !(is_admin? || (change_user_is_current_user? && !attempting_to_make_an_admin?))    
       not_authorized
     end
   end
