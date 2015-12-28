@@ -6,9 +6,6 @@ class OrganizationUsersController < ApplicationController
   end
   
   def create
-    if @organization_user.role.blank?
-      @organization_user.role = Role.user
-    end
     if @organization_user.create
       respond_to do |format|
         format.json { render :json => @organization_user, status: :success }
@@ -65,14 +62,25 @@ class OrganizationUsersController < ApplicationController
     if params[:user_id].blank?
       @change_user = current_user
     else
-      @change_user = Organization.find(params[:user_id])
+      @change_user = User.find(params[:user_id])
     end
+  end
+  
+  def set_new_role
+    if params[:role_id].blank?
+      @role = Role.user
+    else
+      @role = Role.find(params[:role_id])
+    end
+    
   end
   
   def set_organization_user
     set_change_user
     set_organization
-    @organization_user = OrganizationUser.find_by(user: @change_user, organization: @organization)
+    set_new_role
+    @organization_user = OrganizationUser.find_by(user: @change_user, organization: @organization) || OrganizationUser.new(user: @change_user, organization: @organization)
+    @organization_user.role = @role
   end
   
   def change_user_is_current_user?
@@ -105,6 +113,8 @@ class OrganizationUsersController < ApplicationController
   # returns nothing
   def has_authorization
     if !is_admin? && !change_user_is_current_user?
+      not_authorized
+    else
       if attempting_to_make_an_admin? && !is_admin?
         not_authorized
       end
