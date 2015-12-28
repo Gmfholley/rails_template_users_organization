@@ -20,19 +20,22 @@
       <tbody>
         <% @organization.users.each do |user| %>
           <tr>
-            <% if user == @user || @is_admin %>
+            <% if user == @user %>
+                <td><%= link_to "#{user.first_name} #{user.last_name}", profile_path %></td>
+                <td><%= user.role(@organization).name %> 
+                  <%= link_to "Drop organization", organization_user_path(@organization.token, user.id), method: "delete", class: "btn" %></td>
+              
+            <% elsif @is_admin %>  
                 <td><%= link_to "#{user.first_name} #{user.last_name}", user_path(user.id) %></td>
                 <td><%= user.role(@organization).name %> 
                   <%= link_to "Remove user", organization_user_path(@organization.token, user.id), method: "delete", class: "btn" %>
-                  <% if @is_admin %>
-                    <% if user.role(@organization) == Role.admin %>
-                      <%= link_to "Remove admin", organization_user_path(@organization.token, user.id, organization_user: {role_id: @user_id}), method: "put", class: "btn" %>
-                    <% else %>
-                      <%= link_to "Make an admin", organization_user_path(@organization.token, user.id, organization_user: {role_id: @admin_id}), method: "put", class: "btn" %>              
-                    <% end %>
+                  <% if user.role(@organization) == Role.admin %>
+                    <%= link_to "Remove admin", organization_user_path(@organization.token, user.id, organization_user: {role_id: @user_id}), method: "put", class: "btn" %>
+                  <% else %>
+                    <%= link_to "Make an admin", organization_user_path(@organization.token, user.id, organization_user: {role_id: @admin_id}), method: "put", class: "btn" %>              
                   <% end %>
                 </td>
-              <% else %>
+            <% else %>
                 <td><%= "#{user.first_name} #{user.last_name}" %></td>
                 <td></td>
             <% end %>
