@@ -6,7 +6,7 @@ class OrganizationUsersController < ApplicationController
   end
   
   def create
-    if @organization_user.create
+    if @organization_user.save
       respond_to do |format|
         format.json { render :json => @organization_user, status: :success }
         format.html { redirect_to profile_path, notice: "Thanks!" }
