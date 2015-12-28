@@ -115,6 +115,8 @@ class OrganizationUsersControllerTest < ActionController::TestCase
     assert_no_difference('OrganizationUser.count') do
       delete :destroy, id: @organization_with_an_admin.token, user_id: @admin_user.id, organization_user: { organization_id: @organization_with_an_admin.id, user_id: @admin_user.id }
     end
+    assert_redirected_to profile_path, "Not authorized but allowed to go"
+    assert_equal flash[:alert], "You do not have access to view that page.", "Not the right alert"  
     
     # should be able to destroy him/herself
     assert_difference('OrganizationUser.count', -1) do
