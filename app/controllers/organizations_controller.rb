@@ -37,6 +37,7 @@ class OrganizationsController < ApplicationController
   
   def show
     @user = current_user
+    @is_admin = is_admin?
   end
   
   def destroy
