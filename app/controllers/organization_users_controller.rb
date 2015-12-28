@@ -52,6 +52,9 @@ class OrganizationUsersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_organization
     @organization = Organization.find_by(token: params[:id])
+    if @organization.blank?
+      redirect_to :back, notice: "That is not an organization."
+    end
   end
   
   # sets the current user
@@ -63,6 +66,9 @@ class OrganizationUsersController < ApplicationController
       @change_user = current_user
     else
       @change_user = User.find(params[:user_id])
+    end
+    if @change_user.blank?
+      redirect_to :back, notice: "That is not a user."
     end
   end
   
@@ -88,7 +94,11 @@ class OrganizationUsersController < ApplicationController
   end
   
   def attempting_to_make_an_admin?
-    params[:organization_users][:role_id] == Role.admin.id
+    if params[:organization_users]
+      params[:organization_users][:role_id] == Role.admin.id
+    else
+      false
+    end
   end
   
   
