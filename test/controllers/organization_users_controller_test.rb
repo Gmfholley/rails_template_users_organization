@@ -43,7 +43,10 @@ class OrganizationUsersControllerTest < ActionController::TestCase
       #susan (who is an admin at the bank), is adding david to the bank
       post :create, id: @organization_with_an_admin.token, user_id: @non_admin_user.id, organization_user: { organization_id: @organization_with_an_admin.id, user_id: @non_admin_user.id }
     end
-    assert_redirected_to :back    
+    assert_redirected_to :back   
+    
+    
+     
   end
   
   test "should not get create if user is not authorized" do 
