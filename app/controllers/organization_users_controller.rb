@@ -104,8 +104,8 @@ class OrganizationUsersController < ApplicationController
   #
   # returns boolean
   def attempting_to_make_an_admin?
-    if params[:organization_users]
-      params[:organization_users][:role_id] == Role.admin.id
+    if params[:organization_user]
+      params[:organization_user][:role_id].to_i == Role.admin.id
     else
       false
     end
